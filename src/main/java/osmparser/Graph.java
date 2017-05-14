@@ -70,10 +70,12 @@ public class Graph {
         List<NodeJson> listNodeJson = new ArrayList<>();
         for (Long lon:this.nodes.keySet()) {
             Node node = this.nodes.get(lon);
-            listNodeJson.add(new NodeJson(node.getId(),node.getLat(),node.getLon(),node.getNodeIds()));
+            if(!node.getNodeIds().isEmpty()) {
+                listNodeJson.add(new NodeJson(node.getId(), node.getLat(), node.getLon(), node.getNodeIds()));
+            }
         }
         try (Writer writer = new FileWriter("nodes.json")) {
-            Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(listNodeJson, writer);
         } catch (IOException e) {
             e.printStackTrace();
