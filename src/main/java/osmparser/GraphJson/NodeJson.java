@@ -7,9 +7,9 @@ public class NodeJson {
     private long id;
     private double lat;
     private double lon;
-    private List<Long> edges;
+    private List<OneWeight> edges;
 
-    public NodeJson(long id, double lat, double lon, List<Long> edges){
+    public NodeJson(long id, double lat, double lon, List<OneWeight> edges){
         this.id = id;
         this.lat = lat;
         this.lon = lon;

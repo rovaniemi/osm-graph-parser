@@ -41,14 +41,6 @@ public class Weight {
         return (rad * 180 / Math.PI);
     }
 
-    public String toString(){
-            String toStrign = "\nid: " + this.id + "\n";
-            toStrign += "   edges: \n";
-            for (int i = 0; i < this.weight.size(); i++) {
-                toStrign += "   id: " + this.weight.get(i)[0] + "   weight: " + this.weight.get(i)[1] + "\n";
-            }
-            return toStrign;
-    }
 
     public long getId() {
         return id;
