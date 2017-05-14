@@ -36,7 +36,7 @@ public class Osmparser {
 
     public static Document getDocument(){
         try {
-            File map = new File(Osmparser.class.getClassLoader().getResource("map.xml").toURI());
+            File map = new File(Osmparser.class.getClassLoader().getResource("map-01.osm").toURI());
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(map);

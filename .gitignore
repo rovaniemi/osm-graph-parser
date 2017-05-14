@@ -22,3 +22,6 @@ hs_err_pid*
 # Maven
 log/
 target/
+
+# Project files
+graph.json
