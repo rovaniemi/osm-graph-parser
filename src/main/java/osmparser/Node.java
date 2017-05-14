@@ -1,6 +1,8 @@
 package osmparser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Node {
 
@@ -30,5 +32,13 @@ public class Node {
 
     public double getLon() {
         return lon;
+    }
+
+    public List<Long> getNodeIds(){
+        List<Long> nodeIds = new ArrayList<>();
+        for (Node node:edges) {
+            nodeIds.add(node.getId());
+        }
+        return nodeIds;
     }
 }

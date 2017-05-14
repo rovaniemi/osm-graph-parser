@@ -50,6 +50,11 @@ public class Weight {
             return toStrign;
     }
 
+    public long getId() {
+        return id;
+    }
+
+
     public List<Long[]> getWeight() {
         return weight;
     }

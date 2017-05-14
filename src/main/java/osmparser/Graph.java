@@ -1,8 +1,10 @@
 package osmparser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import osmparser.GraphJson.NodeJson;
+
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -65,7 +67,17 @@ public class Graph {
     }
 
     public void getNodeJson(){
-
+        List<NodeJson> listNodeJson = new ArrayList<>();
+        for (Long lon:this.nodes.keySet()) {
+            Node node = this.nodes.get(lon);
+            listNodeJson.add(new NodeJson(node.getId(),node.getLat(),node.getLon(),node.getNodeIds()));
+        }
+        try (Writer writer = new FileWriter("nodes.json")) {
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(listNodeJson, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getWeightJson(){
