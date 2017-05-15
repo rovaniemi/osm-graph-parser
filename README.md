@@ -1,16 +1,53 @@
 # osm-graph-parser
-Java program that parses OSM XML files into a graph representation.
+Java program that parses OSM XML files into a json graph representation. 
+
+## Example
+
+In output file you will have nodes and edges (highways) with weight (centimetres).
+```json
+[
+  {
+    "id": 443030113,
+    "lat": 66.4740787,
+    "lon": 25.7742872,
+    "edges": [
+      {
+        "id": 736017556,
+        "weight": 899
+      },
+      {
+        "id": 443030115,
+        "weight": 3756
+      }
+    ]
+  },
+  {
+    "id": 443030115,
+    "lat": 66.4741164,
+    "lon": 25.7751283,
+    "edges": [
+      {
+        "id": 443030113,
+        "weight": 3756
+      },
+      {
+        "id": 443030119,
+        "weight": 4014
+      }
+    ]
+  }
+```
 
 ## Getting Started
 
 1. [Download](https://github.com/rovaniemi/osm-graph-parser/releases) the latest versions under the releases tab.
-2. [Download](https://www.openstreetmap.org/) openstreetmap data. (Click export, select area, and then export)
-3. Make directory called `map` in the directory where you have .jar file.
-4. Change If you have multiple osm files name them like `map-01.map`, `map-02.map` etc. and put them in map directory.
+2. [Download](https://www.openstreetmap.org/) openstreetmap data. (click export, select area, and then export)
+3. Make directory called `map` in the directory where you have downloaded .jar file.
+4. Name osm file to map-01.osm, if you have multiple osm files name them like `map-01.map`, `map-02.map` etc. and put them in map directory.
 5. Now your tree should look like this. ![img](http://imgur.com/ntvFUQN.png)
-6. Run the jar file. (Terminal `java -jar <jar-file-name>.jar`)
+6. Run the jar file. (terminal `java -jar <jar-file-name>.jar`)
 7. Now you have `graph.json` in the same directory where the .jar file is
-8. If you use this data in your own service read[openstreetmap licence](https://opendatacommons.org/licenses/odbl/1.0/)
+8. If you use this data in your own service read [openstreetmap licence](https://opendatacommons.org/licenses/odbl/1.0/)
 
 
 ### Prerequisites
@@ -31,4 +68,4 @@ Please read [CONTRIBUTING.md](contributing.md) for details on our code of conduc
 
 ## License
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE) file for details
