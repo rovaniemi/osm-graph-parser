@@ -23,7 +23,6 @@ public class Osmparser {
         addNodesAndWaysToGraphFromFile();
         graph.modifyData();
         graph.getNodeJson();
-        graph.getWeightJson();
     }
 
     public static void addNodesAndWaysToGraphFromFile(){
