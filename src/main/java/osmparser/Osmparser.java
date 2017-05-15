@@ -11,6 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,23 +21,35 @@ public class Osmparser {
     static Graph graph;
 
     public static void main(String[] args) {
+        System.out.println("Greating graph...");
         graph = new Graph();
+        System.out.println("Reading oms file...");
         addNodesAndWaysToGraphFromFile();
+        System.out.println("Editing data...");
         graph.modifyData();
+        System.out.println("Greating json...");
         graph.getNodeJson();
     }
 
     public static void addNodesAndWaysToGraphFromFile(){
-        Document doc = getDocument();
-        NodeList nodeList = doc.getElementsByTagName("node");
-        parseNodes(nodeList);
-        NodeList wayList = doc.getElementsByTagName("way");
-        parseWays(wayList);
+        try {
+            long size = Files.list(Paths.get("map/")).count();
+            for (long j = 0; j < size; j++) {
+                Document doc = getDocument("map-" + underTen(j + 1) + ".osm");
+                NodeList nodeList = doc.getElementsByTagName("node");
+                parseNodes(nodeList);
+                NodeList wayList = doc.getElementsByTagName("way");
+                parseWays(wayList);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static Document getDocument(){
+    public static Document getDocument(String documentName){
         try {
-            File map = new File(Osmparser.class.getClassLoader().getResource("map-01.osm").toURI());
+            String path = Osmparser.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            File map = new File("map/" + documentName);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(map);
@@ -44,8 +58,6 @@ public class Osmparser {
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -73,7 +85,7 @@ public class Osmparser {
             Node way = nodeList.item(i);
             if (way.getNodeType() == Node.ELEMENT_NODE) {
                 Element wayElement = (Element) way;
-                if(containtsHighWayTag(wayElement)){
+                if(containsHighWayTag(wayElement)){
                     long id = Long.parseLong(wayElement.getAttribute("id"));
                     graph.addOneWay(new Way(id,getIds(wayElement.getElementsByTagName("nd"))));
                 }
@@ -81,7 +93,7 @@ public class Osmparser {
         }
     }
 
-    private static boolean containtsHighWayTag(Element wayElement){
+    private static boolean containsHighWayTag(Element wayElement){
         NodeList tagList = wayElement.getElementsByTagName("tag");
         final int tagListLenght = tagList.getLength();
         for (int j = 0; j < tagListLenght; j++) {
@@ -107,5 +119,13 @@ public class Osmparser {
             }
         }
         return nodeIds;
+    }
+
+    public static String underTen(long j){
+        if(j < 10){
+            return "0" + j;
+        } else{
+            return "" + j;
+        }
     }
 }

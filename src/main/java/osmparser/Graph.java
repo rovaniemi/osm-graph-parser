@@ -3,9 +3,7 @@ package osmparser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import osmparser.GraphJson.NodeJson;
-import osmparser.GraphJson.OneWeight;
 import osmparser.GraphJson.WeightJson;
-
 import java.io.*;
 import java.util.*;
 
@@ -73,10 +71,10 @@ public class Graph {
             Node node = this.nodes.get(lon);
             if(this.weights.containsKey(node.getId())){
                 Weight weight = this.weights.get(node.getId());
-                List<OneWeight> weights = new ArrayList<>();
+                List<WeightJson> weights = new ArrayList<>();
                 for (int i = 0; i < weight.getWeight().size(); i++) {
-                    OneWeight oneWeight = new OneWeight(weight.getWeight().get(i)[0], weight.getWeight().get(i)[1]);
-                    weights.add(oneWeight);
+                    WeightJson weightJson = new WeightJson(weight.getWeight().get(i)[0], weight.getWeight().get(i)[1]);
+                    weights.add(weightJson);
                 }
                 if(!node.getNodeIds().isEmpty()) {
                     nodeJsonList.add(new NodeJson(node.getId(), node.getLat(), node.getLon(), weights));
@@ -86,23 +84,6 @@ public class Graph {
         try (Writer writer = new FileWriter("graph.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(nodeJsonList, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getWeightJson(){
-        List<WeightJson> weightJsonList = new ArrayList<>();
-        for (Long lon:this.weights.keySet()){
-            Weight weight = this.weights.get(lon);
-            WeightJson weightJson = new WeightJson(weight.getId(), weight.getWeight());
-            if(weight.getWeight().size() > 0){
-                weightJsonList.add(weightJson);
-            }
-        }
-        try (Writer writer = new FileWriter("weights.json")) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(weightJsonList, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }

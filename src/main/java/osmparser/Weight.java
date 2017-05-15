@@ -41,17 +41,11 @@ public class Weight {
         return (rad * 180 / Math.PI);
     }
 
-
     public long getId() {
         return id;
     }
 
-
     public List<Long[]> getWeight() {
         return weight;
-    }
-
-    public void setWeight(List<Long[]> weight) {
-        this.weight = weight;
     }
 }

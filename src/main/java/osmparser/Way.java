@@ -12,19 +12,7 @@ public class Way {
         this.nodes = nodes;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public List<Long> getNodes() {
         return nodes;
-    }
-
-    public void setNodes(List<Long> nodes) {
-        this.nodes = nodes;
     }
 }
