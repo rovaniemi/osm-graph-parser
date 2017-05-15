@@ -9,5 +9,4 @@ public class WeightJson {
         this.id = id;
         this.weight = weight;
     }
-
 }

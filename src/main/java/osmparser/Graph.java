@@ -19,14 +19,13 @@ public class Graph {
         this.weights = new HashMap<>();
     }
 
-    public void modifyData(){
+    public void transformWaysToWeights(){
         for (Way way:this.ways) {
             List<Long> list = way.getNodes();
             for (int i = 0; i < list.size(); i++) {
                 if(i == 0 && list.size() > 1){
                     Node node = this.nodes.get(list.get(i));
                     Node nextNode = this.nodes.get(list.get(i + 1));
-                    node.addEdge(nextNode);
                     if(this.weights.containsKey(node.getId())){
                         this.weights.get(node.getId()).addWeight(nextNode);
                     } else {
@@ -38,8 +37,6 @@ public class Graph {
                     Node node = this.nodes.get(list.get(i));
                     Node prevNode = this.nodes.get(list.get(i - 1));
                     Node nextNode = this.nodes.get(list.get(i + 1));
-                    node.addEdge(prevNode);
-                    node.addEdge(nextNode);
                     if(this.weights.containsKey(node.getId())){
                         this.weights.get(node.getId()).addWeight(prevNode);
                         this.weights.get(node.getId()).addWeight(nextNode);
@@ -52,7 +49,6 @@ public class Graph {
                 } else if (i == list.size() - 1 && list.size() > 1){
                     Node node = this.nodes.get(list.get(i));
                     Node prevNode = this.nodes.get(list.get(i - 1));
-                    node.addEdge(prevNode);
                     if(this.weights.containsKey(node.getId())){
                         this.weights.get(node.getId()).addWeight(prevNode);
                     } else {
@@ -76,7 +72,7 @@ public class Graph {
                     WeightJson weightJson = new WeightJson(weight.getWeight().get(i)[0], weight.getWeight().get(i)[1]);
                     weights.add(weightJson);
                 }
-                if(!node.getNodeIds().isEmpty()) {
+                if(weights.size() > 0) {
                     nodeJsonList.add(new NodeJson(node.getId(), node.getLat(), node.getLon(), weights));
                 }
             }

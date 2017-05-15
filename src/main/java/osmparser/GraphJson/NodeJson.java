@@ -1,5 +1,4 @@
 package osmparser.GraphJson;
-
 import java.util.List;
 
 public class NodeJson {

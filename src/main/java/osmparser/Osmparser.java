@@ -3,14 +3,13 @@ package osmparser;
 public class Osmparser {
 
     public static void main(String[] args) {
-        System.out.println("reading oms file...");
+        System.out.println("Reading oms file...");
         XmlFileReader xmlFileReader = new XmlFileReader();
-        System.out.println("greating graph...");
-        System.out.println("transforming data");
+        System.out.println("Transforming data...");
         xmlFileReader.readXmlFiles();
         Graph graph = xmlFileReader.getGraph();
-        graph.modifyData();
-        System.out.println("greating json...");
+        graph.transformWaysToWeights();
+        System.out.println("Greating json...");
         graph.getNodeJson();
     }
 }

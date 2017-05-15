@@ -4,7 +4,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,8 +25,8 @@ public class XmlFileReader {
     public void readXmlFiles(){
         try {
             long size = Files.list(Paths.get("map/")).count();
-            for (long j = 0; j < size; j++) {
-                Document doc = getDocument("map-" + underTen(j + 1) + ".osm");
+            for (long j = 1; j < size + 1; j++) {
+                Document doc = getDocument("map-" + underTen(j) + ".osm");
                 NodeList nodeList = doc.getElementsByTagName("node");
                 parseNodes(nodeList);
                 NodeList wayList = doc.getElementsByTagName("way");
@@ -40,7 +39,6 @@ public class XmlFileReader {
 
     public Document getDocument(String documentName){
         try {
-            String path = Osmparser.class.getProtectionDomain().getCodeSource().getLocation().getPath();
             File map = new File("map/" + documentName);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
