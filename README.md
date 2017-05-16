@@ -1,4 +1,8 @@
 # osm-graph-parser
+![travis](https://travis-ci.org/rovaniemi/osm-graph-parser.svg?branch=master)
+[![Code Coverage](https://img.shields.io/codecov/c/github/rovaniemi/osm-graph-parser/develop.svg)](https://codecov.io/github/rovaniemi/osm-graph-parser)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/rovaniemi/osm-graph-parser/blob/master/LICENSE)
+
 Java program that parses OSM XML files into a json graph representation. 
 
 ## Example
@@ -57,10 +61,6 @@ You will need a Java Runtime Environment (JRE) to run java programs. You can dow
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
-
-## Contributing
-
-Please read [CONTRIBUTING.md](contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
