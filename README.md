@@ -56,11 +56,11 @@ In output file you will have nodes and edges (highways) with weight (centimetres
 
 ### Prerequisites
 
-You will need a Java Runtime Environment (JRE) to run java programs. You can downlowd it [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).
+You will need a Java Runtime Environment (JRE) to run java programs. You can download it [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).
 
 ## Built With
 
-* [Maven](https://maven.apache.org/) - Dependency Management
+* [Gradle](https://gradle.org) - Dependency Management
 
 ## Authors
 
