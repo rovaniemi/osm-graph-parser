@@ -1,9 +1,13 @@
-package omsparser.GraphJson;
-import org.junit.*;
+package omsparser;
 
-public class NodeJsonTest {
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
-    public NodeJsonTest() {
+public class XmlReaderTest {
+
+    public XmlReaderTest(){
 
     }
 
