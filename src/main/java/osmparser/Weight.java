@@ -12,7 +12,7 @@ public class Weight {
 
     @Override
     public int hashCode() {
-        return (int)(id / (weight + 1));
+        return (int) id;
     }
 
     @Override
