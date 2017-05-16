@@ -13,4 +13,8 @@ public class Graph {
     public void addNode(Node node){
         this.graph.add(node);
     }
+
+    public List<Node> getGraph() {
+        return graph;
+    }
 }

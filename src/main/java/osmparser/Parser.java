@@ -107,7 +107,7 @@ public class Parser {
         Graph graph = changeHashMapToGraph();
         try (Writer writer = new FileWriter("graph.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(graph, writer);
+            gson.toJson(graph.getGraph(), writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
