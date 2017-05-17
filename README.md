@@ -7,7 +7,7 @@ Java program that parses OSM XML files into a json graph representation.
 
 ## Example
 
-In output file you will have nodes and edges (highways) with weight (centimetres).
+In output file you will have nodes and edges (highways in real world) with weight (unit: `centimetres`).
 ```json
 [
   {

@@ -19,6 +19,8 @@ public class Parser {
     public Parser(){
         this.xmlReader = new XmlReader();
         this.graph = new HashMap<>();
+        parseDocumentsToGraph();
+        getNodeJson();
     }
 
     public void parseDocumentsToGraph(){

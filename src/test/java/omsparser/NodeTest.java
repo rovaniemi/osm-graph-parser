@@ -77,6 +77,15 @@ public class NodeTest {
     }
 
     @Test
+    public void notEqualsIfIdAndLatIsSameBUtLonIsDifferent(){
+        for (int i = 0; i < 10000; i++) {
+            Node node = new Node(12313213, 12.11, 59.23 * i * 0.002);
+            Node nodeTwo = new Node(12313213, 12.11, 12.11 * 0.002);
+            assertNotEquals(node,nodeTwo);
+        }
+    }
+
+    @Test
     public void notEqualsIfIdIsDifferent(){
         for (int i = 0; i < 10000; i++) {
             Node node = new Node(12313213 + i, 12.11, 12.11);

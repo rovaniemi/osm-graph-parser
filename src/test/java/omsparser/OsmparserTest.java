@@ -1,9 +1,9 @@
 package omsparser;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.*;
+import osmparser.Osmparser;
+
+import static org.junit.Assert.assertNotEquals;
 
 public class OsmparserTest {
 
@@ -25,5 +25,12 @@ public class OsmparserTest {
 
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void doWeHaveParser(){
+        Osmparser osm = new Osmparser();
+        osm.main(new String[0]);
+        assertNotEquals(osm.parser,null);
     }
 }
