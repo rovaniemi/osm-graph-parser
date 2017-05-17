@@ -4,17 +4,17 @@ import java.util.*;
 
 public class Graph {
 
-    private List<Node> graph;
+    private Set<Node> graph;
 
     public Graph() {
-        this.graph = new ArrayList<>();
+        this.graph = new HashSet<>();
     }
 
     public void addNode(Node node){
         this.graph.add(node);
     }
 
-    public List<Node> getGraph() {
+    public Set<Node> getGraph() {
         return graph;
     }
 }

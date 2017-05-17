@@ -76,4 +76,19 @@ public class WeightTest {
             assertNotEquals(weightThree.hashCode(),weightFour.hashCode());
         }
     }
+
+    @Test
+    public void ifHaveSameIdButDifferentWeight(){
+        for (int i = 0; i < 1000; i++) {
+            Weight one = new Weight(1928192 + i, 12903 + i * i);
+            Weight two = new Weight(1928192 + i, 12302 - i * i);
+            assertNotEquals(one,two);
+        }
+    }
+
+    @Test
+    public void ifObjectIsNullOrDifferentClassNotEqualsWithWeight(){
+        assertNotEquals(null,new Weight(1239,1230));
+        assertNotEquals("ObjectString",new Weight(1239,123));
+    }
 }

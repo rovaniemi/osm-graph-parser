@@ -64,4 +64,27 @@ public class Node {
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        Node node = (Node) o;
+        if (id != node.id){
+            return false;
+        }
+        if (Double.compare(node.lat, lat) != 0) {
+            return false;
+        }
+        if (Double.compare(node.lon, lon) != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) id;
+    }
 }
