@@ -88,7 +88,7 @@ public class WeightTest {
 
     @Test
     public void ifObjectIsNullOrDifferentClassNotEqualsWithWeight(){
-        assertNotEquals(null,new Weight(1239,1230));
-        assertNotEquals("ObjectString",new Weight(1239,123));
+        assertEquals(false, new Weight(1239,1230).equals(null));
+        assertEquals(false, new Weight(1239,123).equals("asf"));
     }
 }

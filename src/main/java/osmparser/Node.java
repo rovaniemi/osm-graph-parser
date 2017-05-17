@@ -32,10 +32,7 @@ public class Node {
     public void addWeight(Node node){
         long id = node.getId();
         long distance = distance(this.getLat(), this.getLon(),node.getLat(),node.getLon());
-        Weight weight = new Weight(node.getId(), distance);
-        if(!this.edges.contains(weight)) {
-            this.edges.add(weight);
-        }
+        this.edges.add(new Weight(node.getId(), distance));
     }
 
     public boolean haveWeights(){

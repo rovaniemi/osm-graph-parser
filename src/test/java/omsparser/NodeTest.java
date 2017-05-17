@@ -63,7 +63,34 @@ public class NodeTest {
     @Test
     public void ifDifferentObjectOrNullIsNotEquals(){
         Node node = new Node(1231231,12.22 * 0.12, 12.43 * 0.00012);
-        assertNotEquals("stringObject",node);
-        assertNotEquals(null,node);
+        assertEquals(false, node.equals("asdfasdf"));
+        assertEquals(false, node.equals(null));
+    }
+
+    @Test
+    public void notEqualsIfIdIsSameButLatAndLonIsDifferent(){
+        for (int i = 0; i < 10000; i++) {
+            Node node = new Node(12313213, 12.11 * i * 0.02, 59.23 * i * 0.002);
+            Node nodeTwo = new Node(12313213, 59.23 * 0.1, 12.11 * 0.002);
+            assertNotEquals(node,nodeTwo);
+        }
+    }
+
+    @Test
+    public void notEqualsIfIdIsDifferent(){
+        for (int i = 0; i < 10000; i++) {
+            Node node = new Node(12313213 + i, 12.11, 12.11);
+            Node nodeTwo = new Node(12313212 - i, 12.11, 12.11);
+            assertNotEquals(node,nodeTwo);
+        }
+    }
+
+    @Test
+    public void equalsIfSame(){
+        for (int i = 0; i < 10000; i++) {
+            Node node = new Node(12313213 + i, 12.11 * i * 0.002, 12.11 * i * 0.002);
+            Node nodeTwo = new Node(12313213 + i, 12.11 * i * 0.002, 12.11 * i * 0.002);
+            assertEquals(node,nodeTwo);
+        }
     }
 }
