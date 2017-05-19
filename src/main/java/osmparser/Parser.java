@@ -1,52 +1,55 @@
 package osmparser;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.*;
 
 public class Parser {
 
-    private XmlReader xmlReader;
-    private Map<Long, Node> graph;
+    private final String filename = "map";
 
-    public Parser(){
+    private XmlReader xmlReader;
+    private Graph graph;
+    private List<String> tags;
+
+    public Parser(List<String> tags){
         this.xmlReader = new XmlReader();
-        this.graph = new HashMap<>();
+        this.graph = new Graph();
+        this.tags = tags;
+    }
+
+    public void startParsing(){
         parseDocumentsToGraph();
-        getNodeJson();
+        new JsonMaker().getNodeJson(this.graph.getGraph(),"graph");
     }
 
     public void parseDocumentsToGraph(){
-        List<Document> documentList = this.xmlReader.getListOfDocuments();
-        for (int i = 0; i < documentList.size(); i++) {
-            parseOneDocument(documentList.get(i));
+        for (int i = 1; i <= this.xmlReader.howManyDocuments(); i++) {
+            parseDocument(this.xmlReader.getDocument(this.filename,i));
         }
     }
 
-    private void parseOneDocument(Document document){
+    private void parseDocument(Document document){
         parseNodes(document.getElementsByTagName("node"));
         parseWeights(document.getElementsByTagName("way"));
     }
 
     private void parseNodes(NodeList nodeList){
-        final int nodeListLength = nodeList.getLength();
-        for (int i = 0; i < nodeListLength; i++) {
-            org.w3c.dom.Node nNode = nodeList.item(i);
-            if (nNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
-                Element eElement = (Element) nNode;
-                long id = Long.parseLong(eElement.getAttribute("id"));
-                double lat = Double.parseDouble(eElement.getAttribute("lat"));
-                double lon = Double.parseDouble(eElement.getAttribute("lon"));
-                this.graph.put(id, new Node(id,lat,lon));
+        final int length = nodeList.getLength();
+        for (int i = 0; i < length; i++) {
+            org.w3c.dom.Node node = nodeList.item(i);
+            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                parseNode((Element) node);
             }
         }
+    }
+
+    private void parseNode(Element element){
+        long id = Long.parseLong(element.getAttribute("id"));
+        double lat = Double.parseDouble(element.getAttribute("lat"));
+        double lon = Double.parseDouble(element.getAttribute("lon"));
+        this.graph.addNode(new Node(id,lat,lon));
     }
 
     private void parseWeights(NodeList nodeList){
@@ -55,9 +58,8 @@ public class Parser {
             org.w3c.dom.Node way = nodeList.item(i);
             if (way.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 Element wayElement = (Element) way;
-                if(containsHighWayTag(wayElement)){
-                    List<Long> ids = getIds(wayElement.getElementsByTagName("nd"));
-                    addEdges(ids);
+                if(containsTags(wayElement, this.tags)){
+                    addEdges(getIds(wayElement.getElementsByTagName("nd")));
                 }
             }
         }
@@ -76,54 +78,37 @@ public class Parser {
         return nodeIds;
     }
 
-    private boolean containsHighWayTag(Element wayElement){
+    private boolean containsTags(Element wayElement, List<String> tags){
+        Set<String> set = new HashSet<>();
         NodeList tagList = wayElement.getElementsByTagName("tag");
         final int tagListLenght = tagList.getLength();
         for (int j = 0; j < tagListLenght; j++) {
             org.w3c.dom.Node tag = tagList.item(j);
             if (tag.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE){
                 Element tagElement = (Element) tag;
-                if(tagElement.getAttribute("k").equals("highway")){
-                    return true;
-                }
+                set.add(tagElement.getAttribute("k"));
             }
         }
-        return false;
+        for (int i = 0; i < tags.size(); i++) {
+            if (!set.contains(tags.get(i))){
+                return false;
+
+            }
+        }
+        return true;
     }
 
     public void addEdges(List<Long> edges){
         long size = edges.size();
         for (int i = 0; i < size; i++) {
             if (i == 0 && size > 1) {
-                this.graph.get(edges.get(i)).addWeight(this.graph.get(edges.get(i + 1)));
+                this.graph.addEdge(edges.get(i),edges.get(i + 1));
             } else if(i > 0 && i < size - 1){
-                this.graph.get(edges.get(i)).addWeight(this.graph.get(edges.get(i - 1)));
-                this.graph.get(edges.get(i)).addWeight(this.graph.get(edges.get(i + 1)));
+                this.graph.addEdge(edges.get(i),edges.get(i - 1));
+                this.graph.addEdge(edges.get(i),edges.get(i + 1));
             } else if (i == size - 1 && size > 1){
-                this.graph.get(edges.get(i)).addWeight(this.graph.get(edges.get(i - 1)));
+                this.graph.addEdge(edges.get(i),edges.get(i - 1));
             }
         }
-    }
-
-    public void getNodeJson() {
-        Graph graph = changeHashMapToGraph();
-        try (Writer writer = new FileWriter("graph.json")) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(graph.getGraph(), writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Graph changeHashMapToGraph(){
-        Graph graph = new Graph();
-        for(Iterator<Map.Entry<Long, Node>> it = this.graph.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry<Long, Node> entry = it.next();
-            if(entry.getValue().haveWeights()) {
-                graph.addNode(entry.getValue());
-            }
-            it.remove();
-        }
-        return graph;
     }
 }

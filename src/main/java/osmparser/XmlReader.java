@@ -13,20 +13,17 @@ import java.util.List;
 
 public class XmlReader {
 
-    public List<Document> getListOfDocuments(){
-        List<Document> listOfDocuments = new ArrayList<>();
-        try {
-            long size = Files.list(Paths.get("map/")).count();
-            for (long j = 1; j < size + 1; j++) {
-                listOfDocuments.add(getDocument("map-" + underTen(j) + ".osm"));
-            }
+    public long howManyDocuments(){
+        try{
+            return Files.list(Paths.get("map/")).count();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return listOfDocuments;
+        return 0;
     }
 
-    public Document getDocument(String documentName){
+    public Document getDocument(String documentName, int i){
+        documentName += "-" + underTen(i) + ".osm";
         try {
             File map = new File("map/" + documentName);
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(map);

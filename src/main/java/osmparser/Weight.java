@@ -24,6 +24,6 @@ public class Weight {
         if (this.id != w.id) {
             return false;
         }
-        return weight == w.weight;
+        return true;
     }
 }

@@ -78,15 +78,6 @@ public class WeightTest {
     }
 
     @Test
-    public void ifHaveSameIdButDifferentWeight(){
-        for (int i = 0; i < 1000; i++) {
-            Weight one = new Weight(1928192 + i, 12903 + i * i);
-            Weight two = new Weight(1928192 + i, 12302 - i * i);
-            assertNotEquals(one,two);
-        }
-    }
-
-    @Test
     public void ifObjectIsNullOrDifferentClassNotEqualsWithWeight(){
         assertEquals(false, new Weight(1239,1230).equals(null));
         assertEquals(false, new Weight(1239,123).equals("asf"));

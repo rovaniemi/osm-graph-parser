@@ -27,10 +27,4 @@ public class OsmparserTest {
     public void tearDown() {
     }
 
-    @Test
-    public void doWeHaveParser(){
-        Osmparser osm = new Osmparser();
-        osm.main(new String[0]);
-        assertNotEquals(osm.parser,null);
-    }
 }
