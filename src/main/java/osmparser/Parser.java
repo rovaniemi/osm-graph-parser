@@ -12,11 +12,14 @@ public class Parser {
     private XmlReader xmlReader;
     private Graph graph;
     private List<String> tags;
+    private long id;
+    private Map<Long,Long> idConverter;
 
     public Parser(List<String> tags){
         this.xmlReader = new XmlReader();
         this.graph = new Graph();
         this.tags = tags;
+        this.idConverter = new HashMap();
     }
 
     public void startParsing(){
@@ -47,6 +50,13 @@ public class Parser {
 
     private void parseNode(Element element){
         long id = Long.parseLong(element.getAttribute("id"));
+        if(idConverter.containsKey(id)){
+            id = idConverter.get(id);
+        } else {
+            idConverter.put(id,this.id);
+            id = this.id;
+            this.id++;
+        }
         double lat = Double.parseDouble(element.getAttribute("lat"));
         double lon = Double.parseDouble(element.getAttribute("lon"));
         this.graph.addNode(new Node(id,lat,lon));
@@ -102,12 +112,12 @@ public class Parser {
         long size = edges.size();
         for (int i = 0; i < size; i++) {
             if (i == 0 && size > 1) {
-                this.graph.addEdge(edges.get(i),edges.get(i + 1));
+                this.graph.addEdge(idConverter.get(edges.get(i)),idConverter.get(edges.get(i + 1)));
             } else if(i > 0 && i < size - 1){
-                this.graph.addEdge(edges.get(i),edges.get(i - 1));
-                this.graph.addEdge(edges.get(i),edges.get(i + 1));
+                this.graph.addEdge(idConverter.get(edges.get(i)),idConverter.get(edges.get(i - 1)));
+                this.graph.addEdge(idConverter.get(edges.get(i)),idConverter.get(edges.get(i + 1)));
             } else if (i == size - 1 && size > 1){
-                this.graph.addEdge(edges.get(i),edges.get(i - 1));
+                this.graph.addEdge(idConverter.get(edges.get(i)),idConverter.get(edges.get(i - 1)));
             }
         }
     }

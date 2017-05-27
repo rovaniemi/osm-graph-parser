@@ -3,10 +3,12 @@ package osmparser;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Node {
+public class Node implements Comparable{
 
     private long id;
     private double lat;
+
+
     private double lon;
     private Set<Weight> edges;
 
@@ -52,5 +54,15 @@ public class Node {
     @Override
     public int hashCode() {
         return (int) id;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o == null || o.getClass() != this.getClass()){
+            return 0;
+        }
+        Node n = (Node) o;
+
+        return (int)(this.getId() - n.getId());
     }
 }
