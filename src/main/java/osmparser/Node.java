@@ -39,6 +39,10 @@ public class Node implements Comparable{
         return lon;
     }
 
+    public Set<Weight> getEdges() {
+        return edges;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()){

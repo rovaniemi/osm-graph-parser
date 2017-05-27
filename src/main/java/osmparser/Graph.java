@@ -25,17 +25,17 @@ public class Graph {
         }
     }
 
-    public Set<Node> getGraph() {
-        Set<Node> set = new HashSet<>();
+    public Map<Long, Node> getGraph() {
+        Map<Long,Node> map = new HashMap<>();
         Iterator it = graph.keySet().iterator();
         while (it.hasNext()) {
             Node node = graph.get(it.next());
             if(node.haveEdges()){
-                set.add(node);
+                map.put(node.getId(),node);
             }
             it.remove();
         }
-        return set;
+        return map;
     }
 
     private long distance(double lat1, double lon1, double lat2, double lon2) {
