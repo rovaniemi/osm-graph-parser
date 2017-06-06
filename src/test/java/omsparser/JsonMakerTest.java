@@ -63,4 +63,23 @@ public class JsonMakerTest {
         Assert.assertEquals(list, maker.convertIds(map));
     }
 
+    @Test
+    public void convertIdsWorksWithWeightedMap(){
+        JsonMaker maker = new JsonMaker();
+        Map<Long, Node> map = new HashMap<>();
+        List<Node> list = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            Node n = new Node(i + 100, 12.22,12.22);
+            if(i < 9999){
+                n.addEdge(i + 101, 1000);
+            }
+            map.put((i + 100l), n);
+            Node l = new Node(i, 12.22, 12.22);
+            if(i < 9999){
+                l.addEdge(i + 1,1000);
+            }
+            list.add(l);
+        }
+        Assert.assertEquals(list, maker.convertIds(map));
+    }
 }

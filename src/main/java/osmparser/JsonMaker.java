@@ -22,11 +22,9 @@ public class JsonMaker {
         Map<Long,Node> newGraph = new HashMap<Long,Node>();
         for (long id:graph.keySet()) {
             Node n = graph.get(id);
-            if(!this.idConverter.containsKey(id)){
-                newGraph.put(this.id, new Node(this.id,n.getLat(),n.getLon()));
-                this.idConverter.put(id,this.id);
-                this.id++;
-            }
+            newGraph.put(this.id, new Node(this.id,n.getLat(),n.getLon()));
+            this.idConverter.put(id,this.id);
+            this.id++;
         }
         for (long id: graph.keySet()) {
             Node n = graph.get(id);

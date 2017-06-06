@@ -42,4 +42,8 @@ public class Weight {
     public void setWeight(long weight) {
         this.weight = weight;
     }
+
+    public String toString(){
+        return "" + this.getId();
+    }
 }
