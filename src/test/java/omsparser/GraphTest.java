@@ -31,6 +31,6 @@ public class GraphTest {
 
     @Test
     public void firstSetIsEmpty(){
-        assertEquals(true,new Graph().getGraph().isEmpty());
+        assertEquals(true, new Graph().getGraph().isEmpty());
     }
 }

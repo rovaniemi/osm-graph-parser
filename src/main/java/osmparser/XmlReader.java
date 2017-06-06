@@ -15,7 +15,7 @@ public class XmlReader {
 
     public long howManyDocuments(){
         try{
-            return Files.list(Paths.get("map/")).count();
+            return Files.list(Paths.get("map/")).filter(n -> n.toString().contains("map-") && n.toString().contains(".osm")).count();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,8 +41,7 @@ public class XmlReader {
     private String underTen(long j){
         if(j < 10){
             return "0" + j;
-        } else{
-            return "" + j;
         }
+        return "" + j;
     }
 }
