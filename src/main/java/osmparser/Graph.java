@@ -5,14 +5,14 @@ import java.util.*;
 public class Graph {
 
     public final static double AVERAGE_RADIUS_OF_EARTH_CM = 6371 * 1000 * 100;
-    private Map<Long,Node> graph;
+    private Map<Long, Node> graph;
 
     public Graph() {
         this.graph = new HashMap<>();
     }
 
     public void addNode(Node node){
-        this.graph.put(node.getId(),node);
+        this.graph.put(node.getId(), node);
     }
 
     public void addEdge(long from, long to){
@@ -20,22 +20,13 @@ public class Graph {
             Node fromN = this.graph.get(from);
             Node toN = this.graph.get(to);
             long distance = distance(fromN.getLat(), fromN.getLon(), toN.getLat(), toN.getLon());
-            this.graph.get(from).addEdge(to,distance);
-        } else {
-            return;
+            this.graph.get(from).addEdge(to, distance);
         }
     }
 
     public Map<Long, Node> getGraph() {
         Map<Long,Node> map = new HashMap<>();
-        Iterator it = graph.keySet().iterator();
-        while (it.hasNext()) {
-            Node node = graph.get(it.next());
-            if(node.haveEdges()){
-                map.put(node.getId(),node);
-            }
-            it.remove();
-        }
+        graph.keySet().stream().filter(e -> this.graph.get(e).haveEdges()).forEach(e -> map.put(e, this.graph.get(e)));
         return map;
     }
 

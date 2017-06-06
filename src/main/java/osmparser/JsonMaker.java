@@ -45,8 +45,6 @@ public class JsonMaker {
         return list;
     }
 
-
-
     public void getNodeJson(Map<Long,Node> graph, String filename) {
         try (Writer writer = new FileWriter(filename + ".json")) {
             List<Node> list = convertIds(graph);

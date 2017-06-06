@@ -12,7 +12,6 @@ public class Parser {
     private XmlReader xmlReader;
     private Graph graph;
     private List<String> tags;
-    private long id;
 
     public Parser(List<String> tags){
         this.xmlReader = new XmlReader();

@@ -7,8 +7,6 @@ public class Node implements Comparable{
 
     private long id;
     private double lat;
-
-
     private double lon;
     private Set<Weight> edges;
 
@@ -69,4 +67,5 @@ public class Node implements Comparable{
 
         return (int)(this.getId() - n.getId());
     }
+
 }
