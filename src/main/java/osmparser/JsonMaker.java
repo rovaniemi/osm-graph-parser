@@ -18,7 +18,7 @@ public class JsonMaker {
         this.id = 0;
     }
 
-    public List<Node> convertIds(Map<Long,Node> graph){
+    public List<Node> convertIds(Map<Long, Node> graph){
         Map<Long,Node> newGraph = new HashMap<Long,Node>();
         for (long id:graph.keySet()) {
             Node n = graph.get(id);
