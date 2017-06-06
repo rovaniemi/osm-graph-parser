@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Graph {
 
+    public final static double AVERAGE_RADIUS_OF_EARTH_CM = 6371 * 1000 * 100;
     private Map<Long,Node> graph;
 
     public Graph() {
@@ -38,20 +39,17 @@ public class Graph {
         return map;
     }
 
-    private long distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist *= 60 * 1.1515 * 1.609344 * 100000;
-        return (int) (dist);
-    }
+    public int distance(double lat1, double lon1, double lat2, double lon2) {
 
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
+        double latDistance = Math.toRadians(lat1 - lat2);
+        double lngDistance = Math.toRadians(lon1 - lon2);
 
-    private double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_CM * c));
     }
 }
