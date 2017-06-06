@@ -11,35 +11,48 @@ In output file you will have nodes and edges (highways in real world) with weigh
 ```json
 [
   {
-    "id": 443030113,
-    "lat": 66.4740787,
-    "lon": 25.7742872,
+    "id": 0,
+    "lat": 65.8504211,
+    "lon": 24.145322,
     "edges": [
       {
-        "id": 736017556,
-        "weight": 899
+        "id": 1,
+        "weight": 12854
       },
       {
-        "id": 443030115,
-        "weight": 3756
+        "id": 6804,
+        "weight": 12732
+      },
+      {
+        "id": 6811,
+        "weight": 11897
       }
     ]
   },
   {
-    "id": 443030115,
-    "lat": 66.4741164,
-    "lon": 25.7751283,
+    "id": 1,
+    "lat": 65.8501013,
+    "lon": 24.1480372,
     "edges": [
       {
-        "id": 443030113,
-        "weight": 3756
+        "id": 0,
+        "weight": 12854
       },
       {
-        "id": 443030119,
-        "weight": 4014
+        "id": 7026,
+        "weight": 12156
+      },
+      {
+        "id": 11123,
+        "weight": 742
+      },
+      {
+        "id": 7017,
+        "weight": 12240
       }
     ]
   }
+]
 ```
 
 ## Getting Started

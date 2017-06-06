@@ -3,6 +3,8 @@ package osmparser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import java.io.IOException;
 import java.util.*;
 
 public class Parser {
@@ -19,7 +21,7 @@ public class Parser {
         this.tags = tags;
     }
 
-    public void startParsing(){
+    public void startParsing() throws IOException {
         parseDocumentsToGraph();
         new JsonMaker().getNodeJson(this.graph.getGraph(),"graph");
     }

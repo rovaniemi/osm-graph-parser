@@ -43,14 +43,12 @@ public class JsonMaker {
         return list;
     }
 
-    public void getNodeJson(Map<Long,Node> graph, String filename) {
+    public void getNodeJson(Map<Long,Node> graph, String filename) throws IOException {
         try (Writer writer = new FileWriter(filename + ".json")) {
             List<Node> list = convertIds(graph);
             Collections.sort(list);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(list, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

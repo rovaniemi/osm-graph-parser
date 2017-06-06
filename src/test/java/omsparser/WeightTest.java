@@ -82,4 +82,21 @@ public class WeightTest {
         assertEquals(false, new Weight(1239,1230).equals(null));
         assertEquals(false, new Weight(1239,123).equals("asf"));
     }
+
+    @Test
+    public void toStringWorksFine(){
+        for (int i = 0; i < 10000; i++) {
+            Weight weight = new Weight(i, 1999);
+            assertEquals("" + i, weight.toString());
+        }
+    }
+
+    @Test
+    public void gettersAndSetters(){
+        for (int i = 0; i < 10000; i++) {
+            Weight weight = new Weight(i, 1999 + i);
+            assertEquals(i, weight.getId());
+            assertEquals(1999 + i, weight.getWeight());
+        }
+    }
 }

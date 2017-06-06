@@ -31,16 +31,8 @@ public class Weight {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getWeight() {
         return weight;
-    }
-
-    public void setWeight(long weight) {
-        this.weight = weight;
     }
 
     public String toString(){

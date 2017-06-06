@@ -3,7 +3,6 @@ package omsparser;
 import org.junit.*;
 import osmparser.JsonMaker;
 import osmparser.Node;
-import osmparser.Osmparser;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.assertNotEquals;
 
 public class JsonMakerTest {
 
@@ -41,9 +38,9 @@ public class JsonMakerTest {
     public void methodCreateJsonFile(){
         JsonMaker maker = new JsonMaker();
         Map<Long, Node> j = new HashMap<>();
-        maker.getNodeJson(j,"test");
         long count = 0;
         try{
+            maker.getNodeJson(j,"test");
             count = Files.list(Paths.get("")).filter(n -> n.toString().contains("test.json")).count();
         } catch (IOException e) {
             e.printStackTrace();
