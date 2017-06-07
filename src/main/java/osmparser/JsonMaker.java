@@ -44,11 +44,10 @@ public class JsonMaker {
     }
 
     public void getNodeJson(Map<Long,Node> graph, String filename) throws IOException {
-        try (Writer writer = new FileWriter(filename + ".json")) {
-            List<Node> list = convertIds(graph);
-            Collections.sort(list);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(list, writer);
-        }
+        Writer writer = new FileWriter(filename + ".json");
+        List<Node> list = convertIds(graph);
+        Collections.sort(list);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson.toJson(list, writer);
     }
 }

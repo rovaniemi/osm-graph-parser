@@ -38,7 +38,7 @@ public class XmlReader {
         return null;
     }
 
-    private String underTen(long j){
+    public String underTen(long j){
         if(j < 10){
             return "0" + j;
         }

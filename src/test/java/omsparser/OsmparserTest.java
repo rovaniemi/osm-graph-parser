@@ -3,6 +3,10 @@ package omsparser;
 import org.junit.*;
 import osmparser.Osmparser;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static org.junit.Assert.assertNotEquals;
 
 public class OsmparserTest {
@@ -27,4 +31,10 @@ public class OsmparserTest {
     public void tearDown() {
     }
 
+    @Test
+    public void masterTest() throws IOException {
+        Osmparser osmparser = new Osmparser();
+        osmparser.main(new String[]{""});
+        Assert.assertEquals(1, Files.list(Paths.get("")).filter(n -> n.toString().contains("graph.json")).count());
+    }
 }

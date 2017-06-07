@@ -89,4 +89,11 @@ public class GraphTest {
         Assert.assertEquals(3, g.get(2l).getEdges().size());
         Assert.assertEquals(false, g.containsKey(5l));
     }
+
+    @Test
+    public void notAddNewEdgeIfBothNodesIsNotInGraph(){
+        int size = this.graph.getGraph().get(1l).getEdges().size();
+        this.graph.addEdge(1,12);
+        assertEquals(size, this.graph.getGraph().get(1l).getEdges().size());
+    }
 }
