@@ -64,4 +64,22 @@ public class NodeTest {
             assertEquals(node,nodeTwo);
         }
     }
+
+    @Test
+    public void notEqualsIfNotSame(){
+        for (int i = 0; i < 10000; i++) {
+            Node node = new Node(12313213 + i, 12.11 * i * 0.002, 12.11 * i * 0.002);
+            Node nodeTwo = new Node(12313212 + i, 12.11 * i * 0.002, 12.11 * i * 0.002);
+            assertNotEquals(node, nodeTwo);
+        }
+    }
+
+    @Test
+    public void compereToWorks(){
+        Node n = new Node(12,12.222,18.000);
+        Assert.assertEquals(0, n.compareTo(null));
+        Assert.assertEquals(0, n.compareTo("asdf"));
+        Assert.assertEquals(-2, n.compareTo(new Node(14,12.11,12.22)));
+        Assert.assertEquals(2, n.compareTo(new Node(10,12.11,12.22)));
+    }
 }
