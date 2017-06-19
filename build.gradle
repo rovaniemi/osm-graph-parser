@@ -1,4 +1,10 @@
 apply plugin: 'java'
+jar {
+    manifest {
+        attributes 'Main-Class': 'osmparser.Osmparser'
+    }
+}
+
 apply plugin: 'maven'
 apply plugin: 'jacoco'
 
@@ -7,8 +13,8 @@ version = '0.1'
 
 description = "Java program that parses OSM XML files into a json graph representation.Java program that parses OSM XML files into a json graph representation."
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
      mavenCentral()
@@ -17,9 +23,9 @@ repositories {
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File Example',
-                'Implementation-Version': version,
-                'Main-Class': 'com.karlin.osm-graph-parser.Osmparser'
+        attributes  'Implementation-Title': 'osm-graph-parser',
+                    'Implementation-Version': '0.1',
+                    'Main-Class': 'osmparser.Osmparser'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

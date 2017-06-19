@@ -8,18 +8,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public class XmlReader {
 
     public long howManyDocuments(){
-        try{
-            return Files.list(Paths.get("map/")).filter(n -> n.toString().contains("map-") && n.toString().contains(".osm")).count();
-        } catch (IOException e) {
-            e.printStackTrace();
+        File[] files = new File("map/").listFiles();
+        int counter = 0;
+        for (int i = 0; i < files.length; i++) {
+            if(files[i].getName().startsWith("map-") && files[i].getName().endsWith(".osm")){
+                counter++;
+            }
         }
-        return 0;
+        return counter;
     }
 
     public Document getDocument(String documentName, int i){

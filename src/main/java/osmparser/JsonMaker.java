@@ -47,7 +47,7 @@ public class JsonMaker {
         Writer writer = new FileWriter(filename + ".json");
         List<Node> list = convertIds(graph);
         Collections.sort(list);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().create();
         gson.toJson(list, writer);
     }
 }

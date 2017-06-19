@@ -26,7 +26,11 @@ public class Graph {
 
     public Map<Long, Node> getGraph() {
         Map<Long,Node> map = new HashMap<>();
-        graph.keySet().stream().filter(e -> this.graph.get(e).haveEdges()).forEach(e -> map.put(e, this.graph.get(e)));
+        for (Long l:graph.keySet()) {
+            if(this.graph.get(l).haveEdges()){
+                map.put(l, this.graph.get(l));
+            }
+        }
         return map;
     }
 

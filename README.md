@@ -66,6 +66,10 @@ In output file you will have nodes and edges (highways in real world) with weigh
 7. Now you have `graph.json` in the same directory where the .jar file is.
 8. If you use this data in your own service read [openstreetmap licence.](https://opendatacommons.org/licenses/odbl/1.0/)
 
+### Possible errors
+
+1. Parsing take much time or crash.
+  - You need more memory for the program. Change java run command to `java -jar -Xmx4096m <jar-file-name>.jar`. That will increase java heap max size to 4gb. You will need 4gb ram for that.
 
 ### Prerequisites
 

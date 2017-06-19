@@ -40,3 +40,6 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# Profiler
+*.hprof

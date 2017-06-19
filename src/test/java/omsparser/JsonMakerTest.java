@@ -35,20 +35,6 @@ public class JsonMakerTest {
     }
 
     @Test
-    public void methodCreateJsonFile(){
-        JsonMaker maker = new JsonMaker();
-        Map<Long, Node> j = new HashMap<>();
-        long count = 0;
-        try{
-            maker.getNodeJson(j,"test");
-            count = Files.list(Paths.get("")).filter(n -> n.toString().contains("test.json")).count();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Assert.assertEquals(1, count);
-    }
-
-    @Test
     public void convertIdsWorks(){
         JsonMaker maker = new JsonMaker();
         Map<Long, Node> map = new HashMap<>();
