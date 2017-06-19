@@ -11,18 +11,18 @@ import java.util.*;
 public class Parser {
 
     private final XmlReader xmlReader;
-    private final Graph graph;
     private final String[] requiredWayTags;
+    private Graph graph;
 
     public Parser(String... requiredWayTags){
         this.xmlReader = new XmlReader();
-        this.graph = new Graph();
         this.requiredWayTags = requiredWayTags;
     }
 
-    public void startParsing(File[] files) throws IOException {
-        parseDocumentsToGraph(files);
-        new JsonMaker().getNodeJson(this.graph.getNodesWithEdges(),"graph");
+    public Graph parseAll(File[] xmlFiles) throws IOException {
+        graph = new Graph();
+        parseDocumentsToGraph(xmlFiles);
+        return graph;
     }
 
     private void parseDocumentsToGraph(File[] files) {
