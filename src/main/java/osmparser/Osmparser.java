@@ -1,6 +1,7 @@
 package osmparser;
 
 import com.google.gson.Gson;
+import osmparser.tools.Consumer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,11 +18,26 @@ public class Osmparser {
         convert(mapFiles, parser);
     }
 
-    private static void convert(File[] files, IGraphParser parser) throws IOException {
+    public static void convert(File[] files, IGraphParser parser) throws IOException {
+        convert(files, parser, null);
+    }
+
+    public static List<Node> convert(File[] files, IGraphParser parser, Consumer<String> statusCallback) throws IOException {
+        safeAccept(statusCallback, "At convert");
         Graph parsedGraph = parseAll(files, parser);
+
+        safeAccept(statusCallback,"After parseAll()");
         Map<Long, Node> nonIsolatedNodes = parsedGraph.getNodesWithEdges();
+
+        safeAccept(statusCallback,"After getNodesWithEdges");
         List<Node> normalizedGraph = new IdNormalizer().normalizeIds(nonIsolatedNodes);
+
+        safeAccept(statusCallback,"After normalizeIds");
         dumpToJson(normalizedGraph);
+
+        safeAccept(statusCallback,"After dumpToJson");
+
+        return normalizedGraph;
     }
 
     private static Graph parseAll(File[] xmlFiles, IGraphParser parser) throws IOException {
@@ -38,6 +54,15 @@ public class Osmparser {
 
         try (Writer writer = new FileWriter("graph.json")) {
             new Gson().toJson(nodes, writer);
+        }
+    }
+
+    private static <T> void safeAccept(Consumer<T> consumer, T value) {
+        if (consumer != null) {
+            try {
+                consumer.accept(value);
+            } catch (Exception ex) {
+            }
         }
     }
 }
