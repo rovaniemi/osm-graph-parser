@@ -4,12 +4,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class Parser {
-
-    private final String filename = "map";
 
     private XmlReader xmlReader;
     private Graph graph;
@@ -21,18 +20,21 @@ public class Parser {
         this.tags = tags;
     }
 
-    public void startParsing() throws IOException {
-        parseDocumentsToGraph();
+    public void startParsing(File[] files) throws IOException {
+        parseDocumentsToGraph(files);
         new JsonMaker().getNodeJson(this.graph.getNodesWithEdges(),"graph");
     }
 
-    public void parseDocumentsToGraph(){
-        for (int i = 1; i <= this.xmlReader.howManyDocuments(); i++) {
-            parseDocument(this.xmlReader.getDocument(this.filename,i));
+    private void parseDocumentsToGraph(File[] files) {
+        for (File file : files) {
+            Document document = this.xmlReader.getDocument(file);
+            if (document != null) {
+                parseDocument(document);
+            }
         }
     }
 
-    private void parseDocument(Document document){
+    private void parseDocument(Document document) {
         parseNodes(document.getElementsByTagName("node"));
         parseWeights(document.getElementsByTagName("way"));
     }

@@ -1,7 +1,11 @@
 package osmparser;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Osmparser {
 
@@ -9,6 +13,7 @@ public class Osmparser {
         Parser parser = new Parser(new ArrayList<String>(){{
                 add("highway");
             }});
-        parser.startParsing();
+        File[] mapFiles = MapFileDiscoverer.discover("map/", "map-");
+        parser.startParsing(mapFiles);
     }
 }
