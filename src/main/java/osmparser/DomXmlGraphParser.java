@@ -5,32 +5,27 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class Parser {
+public class DomXmlGraphParser implements IGraphParser {
 
-    private final XmlReader xmlReader;
+    private final XmlReader xmlReader = new XmlReader();
     private final String[] requiredWayTags;
     private Graph graph;
 
-    public Parser(String... requiredWayTags){
-        this.xmlReader = new XmlReader();
+    public DomXmlGraphParser(String... requiredWayTags) {
         this.requiredWayTags = requiredWayTags;
     }
 
-    public Graph parseAll(File[] xmlFiles) throws IOException {
-        graph = new Graph();
-        parseDocumentsToGraph(xmlFiles);
-        return graph;
-    }
-
-    private void parseDocumentsToGraph(File[] files) {
-        for (File file : files) {
-            Document document = this.xmlReader.getDocument(file);
-            if (document != null) {
-                parseDocument(document);
-            }
+    @Override
+    public void parseXml(File file, Graph outputGraph) {
+        this.graph = outputGraph;
+        Document document = this.xmlReader.getDocument(file);
+        if (document != null) {
+            parseDocument(document);
         }
     }
 

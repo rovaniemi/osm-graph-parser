@@ -13,13 +13,22 @@ import java.util.Map;
 public class Osmparser {
 
     public static void main(String[] args) throws IOException {
-        Parser parser = new Parser("highway");
         File[] mapFiles = MapFileDiscoverer.discover("map/", "map-");
-
-        Graph parsedGraph = parser.parseAll(mapFiles);
+        Graph parsedGraph = parseAll(mapFiles);
         Map<Long, Node> nonIsolatedNodes = parsedGraph.getNodesWithEdges();
         List<Node> normalizedGraph = new IdNormalizer().normalizeIds(nonIsolatedNodes);
         dumpToJson(normalizedGraph);
+    }
+
+    private static Graph parseAll(File[] xmlFiles) throws IOException {
+        Graph graph = new Graph();
+        IGraphParser parser = new DomXmlGraphParser("highway");
+
+        for (File file : xmlFiles) {
+            parser.parseXml(file, graph);
+        }
+
+        return graph;
     }
 
     private static void dumpToJson(List<Node> nodes) throws IOException {
