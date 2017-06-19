@@ -4,37 +4,37 @@ import java.util.*;
 
 public class Graph {
 
-    public final static double AVERAGE_RADIUS_OF_EARTH_CM = 6371 * 1000 * 100;
-    private Map<Long, Node> graph;
+    private final static double AVERAGE_RADIUS_OF_EARTH_CM = 6371 * 1000 * 100;
+    private final Map<Long, Node> graph;
 
     public Graph() {
         this.graph = new HashMap<>();
     }
 
-    public void addNode(Node node){
+    public void addNode(Node node) {
         this.graph.put(node.getId(), node);
     }
 
-    public void addEdge(long from, long to){
-        if(this.graph.containsKey(from) && this.graph.containsKey(to)){
-            Node fromN = this.graph.get(from);
-            Node toN = this.graph.get(to);
-            long distance = distance(fromN.getLat(), fromN.getLon(), toN.getLat(), toN.getLon());
-            this.graph.get(from).addEdge(to, distance);
+    public void addEdge(long fromId, long toId) {
+        Node from = this.graph.get(fromId);
+        Node to = this.graph.get(toId);
+        if (from != null && to != null) {
+            long distance = distanceOnEarth(from.getLat(), from.getLon(), to.getLat(), to.getLon());
+            from.addEdgeTo(toId, distance);
         }
     }
 
-    public Map<Long, Node> getGraph() {
+    public Map<Long, Node> getNodesWithEdges() {
         Map<Long,Node> map = new HashMap<>();
-        for (Long l:graph.keySet()) {
-            if(this.graph.get(l).haveEdges()){
-                map.put(l, this.graph.get(l));
+        for (Map.Entry<Long, Node> entry : graph.entrySet()) {
+            if (entry.getValue().haveEdges()) {
+                map.put(entry.getKey(), entry.getValue());
             }
         }
         return map;
     }
 
-    public int distance(double lat1, double lon1, double lat2, double lon2) {
+    private int distanceOnEarth(double lat1, double lon1, double lat2, double lon2) {
 
         double latDistance = Math.toRadians(lat1 - lat2);
         double lngDistance = Math.toRadians(lon1 - lon2);

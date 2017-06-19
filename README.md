@@ -82,6 +82,7 @@ You will need a Java Runtime Environment (JRE) to run java programs. You can dow
 ## Authors
 
 * **Mauri Karlin** - *Owner* - [Rovaniemi](https://github.com/Rovaniemi)
+* **Joona Heikkilä** - Optimizations and refactorings - [cxcorp](https://github.com/cxcorp)
 
 ## License
 

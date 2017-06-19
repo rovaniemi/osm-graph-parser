@@ -4,35 +4,32 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.IOException;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class Parser {
+public class DomXmlGraphParser implements IGraphParser {
 
-    private final String filename = "map";
-
-    private XmlReader xmlReader;
+    private final XmlReader xmlReader = new XmlReader();
+    private final String[] requiredWayTags;
     private Graph graph;
-    private List<String> tags;
 
-    public Parser(List<String> tags){
-        this.xmlReader = new XmlReader();
-        this.graph = new Graph();
-        this.tags = tags;
+    public DomXmlGraphParser(String... requiredWayTags) {
+        this.requiredWayTags = requiredWayTags;
     }
 
-    public void startParsing() throws IOException {
-        parseDocumentsToGraph();
-        new JsonMaker().getNodeJson(this.graph.getGraph(),"graph");
-    }
-
-    public void parseDocumentsToGraph(){
-        for (int i = 1; i <= this.xmlReader.howManyDocuments(); i++) {
-            parseDocument(this.xmlReader.getDocument(this.filename,i));
+    @Override
+    public void parseXml(File file, Graph outputGraph) {
+        this.graph = outputGraph;
+        Document document = this.xmlReader.getDocument(file);
+        if (document != null) {
+            parseDocument(document);
         }
     }
 
-    private void parseDocument(Document document){
+    private void parseDocument(Document document) {
         parseNodes(document.getElementsByTagName("node"));
         parseWeights(document.getElementsByTagName("way"));
     }
@@ -60,7 +57,7 @@ public class Parser {
             org.w3c.dom.Node way = nodeList.item(i);
             if (way.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 Element wayElement = (Element) way;
-                if(containsTags(wayElement, this.tags)){
+                if (containsRequiredTags(wayElement)){
                     addEdges(getIds(wayElement.getElementsByTagName("nd")));
                 }
             }
@@ -80,7 +77,7 @@ public class Parser {
         return nodeIds;
     }
 
-    private boolean containsTags(Element wayElement, List<String> tags){
+    private boolean containsRequiredTags(Element wayElement){
         Set<String> set = new HashSet<>();
         NodeList tagList = wayElement.getElementsByTagName("tag");
         final int tagListLenght = tagList.getLength();
@@ -91,10 +88,9 @@ public class Parser {
                 set.add(tagElement.getAttribute("k"));
             }
         }
-        for (int i = 0; i < tags.size(); i++) {
-            if (!set.contains(tags.get(i))){
+        for (int i = 0; i < requiredWayTags.length; i++) {
+            if (!set.contains(requiredWayTags[i])){
                 return false;
-
             }
         }
         return true;
