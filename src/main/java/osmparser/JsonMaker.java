@@ -49,5 +49,6 @@ public class JsonMaker {
         Collections.sort(list);
         Gson gson = new GsonBuilder().create();
         gson.toJson(list, writer);
+        writer.close();
     }
 }
