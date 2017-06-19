@@ -10,14 +10,14 @@ import java.util.*;
 
 public class Parser {
 
-    private XmlReader xmlReader;
-    private Graph graph;
-    private List<String> tags;
+    private final XmlReader xmlReader;
+    private final Graph graph;
+    private final String[] requiredWayTags;
 
-    public Parser(List<String> tags){
+    public Parser(String... requiredWayTags){
         this.xmlReader = new XmlReader();
         this.graph = new Graph();
-        this.tags = tags;
+        this.requiredWayTags = requiredWayTags;
     }
 
     public void startParsing(File[] files) throws IOException {
@@ -62,7 +62,7 @@ public class Parser {
             org.w3c.dom.Node way = nodeList.item(i);
             if (way.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 Element wayElement = (Element) way;
-                if(containsTags(wayElement, this.tags)){
+                if (containsRequiredTags(wayElement)){
                     addEdges(getIds(wayElement.getElementsByTagName("nd")));
                 }
             }
@@ -82,7 +82,7 @@ public class Parser {
         return nodeIds;
     }
 
-    private boolean containsTags(Element wayElement, List<String> tags){
+    private boolean containsRequiredTags(Element wayElement){
         Set<String> set = new HashSet<>();
         NodeList tagList = wayElement.getElementsByTagName("tag");
         final int tagListLenght = tagList.getLength();
@@ -93,10 +93,9 @@ public class Parser {
                 set.add(tagElement.getAttribute("k"));
             }
         }
-        for (int i = 0; i < tags.size(); i++) {
-            if (!set.contains(tags.get(i))){
+        for (int i = 0; i < requiredWayTags.length; i++) {
+            if (!set.contains(requiredWayTags[i])){
                 return false;
-
             }
         }
         return true;
