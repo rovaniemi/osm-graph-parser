@@ -7,6 +7,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,11 +29,15 @@ public class StreamingXmlGraphParser implements IGraphParser {
     @Override
     public void parseXml(File file, Graph outputGraph) {
         this.graph = outputGraph;
+
+        XMLStreamReader reader = null;
         try (InputStream stream = new FileInputStream(file)) {
-            XMLStreamReader reader = inputFactory.createXMLStreamReader(stream);
+            reader = inputFactory.createXMLStreamReader(stream);
             readGraph(reader);
         } catch (IOException | XMLStreamException ex) {
             throw new RuntimeException(ex);
+        } finally {
+            safeClose(reader);
         }
     }
 
@@ -137,6 +142,16 @@ public class StreamingXmlGraphParser implements IGraphParser {
             } else if (i == size - 1 && size > 1){
                 graph.addEdge(edges.get(i), edges.get(i - 1));
             }
+        }
+    }
+
+    private static void safeClose(XMLStreamReader reader) {
+        if (reader == null)
+            return;
+
+        try {
+            reader.close();
+        } catch (Exception ex) {
         }
     }
 }
