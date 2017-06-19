@@ -23,7 +23,7 @@ public class Parser {
 
     public void startParsing() throws IOException {
         parseDocumentsToGraph();
-        new JsonMaker().getNodeJson(this.graph.getGraph(),"graph");
+        new JsonMaker().getNodeJson(this.graph.getNodesWithEdges(),"graph");
     }
 
     public void parseDocumentsToGraph(){
