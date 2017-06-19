@@ -20,7 +20,7 @@ public class Graph {
         Node to = this.graph.get(toId);
         if (from != null && to != null) {
             long distance = distanceOnEarth(from.getLat(), from.getLon(), to.getLat(), to.getLon());
-            from.addEdge(toId, distance);
+            from.addEdgeTo(toId, distance);
         }
     }
 
