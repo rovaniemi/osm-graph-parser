@@ -11,19 +11,21 @@ import java.util.List;
 import java.util.Map;
 
 public class Osmparser {
-
     public static void main(String[] args) throws IOException {
         File[] mapFiles = MapFileDiscoverer.discover("map/", "map-");
-        Graph parsedGraph = parseAll(mapFiles);
+        IGraphParser parser = new StreamingXmlGraphParser("highway");
+        convert(mapFiles, parser);
+    }
+
+    private static void convert(File[] files, IGraphParser parser) throws IOException {
+        Graph parsedGraph = parseAll(files, parser);
         Map<Long, Node> nonIsolatedNodes = parsedGraph.getNodesWithEdges();
         List<Node> normalizedGraph = new IdNormalizer().normalizeIds(nonIsolatedNodes);
         dumpToJson(normalizedGraph);
     }
 
-    private static Graph parseAll(File[] xmlFiles) throws IOException {
+    private static Graph parseAll(File[] xmlFiles, IGraphParser parser) throws IOException {
         Graph graph = new Graph();
-        IGraphParser parser = new DomXmlGraphParser("highway");
-
         for (File file : xmlFiles) {
             parser.parseXml(file, graph);
         }
