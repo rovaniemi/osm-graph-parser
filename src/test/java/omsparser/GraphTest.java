@@ -113,8 +113,7 @@ public class GraphTest {
         Map<Long, Node> nodes = test.getNodesWithEdges();
         for (Long l:nodes.keySet()) {
             for (Weight w:nodes.get(l).getE()) {
-
-                assertTrue(300 * i <= w.getW() && w.getI() <= 320 * i);
+                assertEquals(true,290 * i <= w.getW() && w.getI() <= 330 * i);
                 i++;
             }
         }
