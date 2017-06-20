@@ -95,8 +95,8 @@ public class WeightTest {
     public void gettersAndSetters(){
         for (int i = 0; i < 10000; i++) {
             Weight weight = new Weight(i, 1999 + i);
-            assertEquals(i, weight.getId());
-            assertEquals(1999 + i, weight.getWeight());
+            assertEquals(i, weight.getI());
+            assertEquals(1999 + i, weight.getW());
         }
     }
 }

@@ -35,8 +35,8 @@ public class NodeTest {
         for (int i = 0; i < 10000; i++) {
             Node node = new Node(123123 + i,62.2344 * (i * 0.00001), 12.2999 * (i * 0.00001));
             assertEquals(123123 + i, node.getId());
-            assertEquals(62.2344 * (i * 0.00001),node.getLat(),DELTA);
-            assertEquals(12.2999 * (i * 0.00001),node.getLon(),DELTA);
+            assertEquals(62.2344 * (i * 0.00001),node.getLa(),DELTA);
+            assertEquals(12.2999 * (i * 0.00001),node.getLo(),DELTA);
         }
     }
 

@@ -11,50 +11,48 @@ In output file you will have nodes and edges (highways in real world) with weigh
 ```json
 [
   {
-    "id": 0,
-    "lat": 65.8504211,
-    "lon": 24.145322,
-    "edges": [
+    "la": 60.1570875,
+    "lo": 24.9563234,
+    "e": [
       {
-        "id": 1,
-        "weight": 12854
+        "i": 1,
+        "w": 514
       },
       {
-        "id": 6804,
-        "weight": 12732
-      },
-      {
-        "id": 6811,
-        "weight": 11897
+        "i": 17,
+        "w": 574
       }
     ]
   },
   {
-    "id": 1,
-    "lat": 65.8501013,
-    "lon": 24.1480372,
-    "edges": [
+    "la": 60.1570488,
+    "lo": 24.9562727,
+    "e": [
       {
-        "id": 0,
-        "weight": 12854
+        "i": 0,
+        "w": 514
       },
       {
-        "id": 7026,
-        "weight": 12156
+        "i": 2,
+        "w": 784
       },
       {
-        "id": 11123,
-        "weight": 742
-      },
-      {
-        "id": 7017,
-        "weight": 12240
+        "i": 11302,
+        "w": 413
       }
     ]
   }
-]
-```
-
+ ]
+ ```
+ 
+ ### How to read that json
+ ```
+ la = latitude
+ lo = longitude
+ e = edges
+ i = main array index, if the i is 0 it refers to the first element in the array
+ w = weight
+ ```
 ## Getting Started
 
 1. [Download](https://github.com/rovaniemi/osm-graph-parser/releases) latest version under the releases tab.
@@ -68,8 +66,8 @@ In output file you will have nodes and edges (highways in real world) with weigh
 
 ### Possible errors
 
-1. Parsing take much time or crash.
-  - You need more memory for the program. Change java run command to `java -jar -Xmx4096m <jar-file-name>.jar`. That will increase java heap max size to 4gb. You will need 4gb ram for that.
+1. Parsing take much time or program crash.
+    - You need more memory for the program. Change java run command to `java -jar -Xmx4096m <jar-file-name>.jar`. That will increase java heap max size to 4gb. You will need 4gb ram for that. If you parse huge map you will need bigger heap size.
 
 ### Prerequisites
 

@@ -5,40 +5,40 @@ import java.util.Set;
 
 public class Node implements Comparable{
 
-    private long id;
-    private double lat;
-    private double lon;
-    private Set<Weight> edges;
+    private transient long id;  // id
+    private double la;          // latitude
+    private double lo;          // longitude
+    private Set<Weight> e;      // edges
 
-    public Node(long id, double lat, double lon) {
+    public Node(long id, double la, double lo) {
         this.id = id;
-        this.lat = lat;
-        this.lon = lon;
-        this.edges = new HashSet<>();
+        this.la = la;
+        this.lo = lo;
+        this.e = new HashSet<>();
     }
 
     public void addEdgeTo(long id, long distance){
-        this.edges.add(new Weight(id, distance));
+        this.e.add(new Weight(id, distance));
     }
 
     public boolean haveEdges(){
-        return !this.edges.isEmpty();
+        return !this.e.isEmpty();
     }
 
     public long getId() {
         return id;
     }
 
-    public double getLat() {
-        return lat;
+    public double getLa() {
+        return la;
     }
 
-    public double getLon() {
-        return lon;
+    public double getLo() {
+        return lo;
     }
 
-    public Set<Weight> getEdges() {
-        return edges;
+    public Set<Weight> getE() {
+        return e;
     }
 
     @Override

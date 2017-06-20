@@ -19,18 +19,18 @@ public class NormalizedGraphDeepComparator implements Comparator<List<Node>> {
 
     private int compareNode(Node o1, Node o2) {
         if (o1.getId() != o2.getId()) return (int) (o1.getId() - o2.getId());
-        Set<Weight> o1Edges = o1.getEdges();
-        Set<Weight> o2Edges = o2.getEdges();
+        Set<Weight> o1Edges = o1.getE();
+        Set<Weight> o2Edges = o2.getE();
         if (o1Edges.size() != o2Edges.size()) return o1Edges.size() - o2Edges.size();
         Iterator o1Iterator = o1Edges.iterator();
         Iterator o2Iterator = o2Edges.iterator();
         while (o1Iterator.hasNext()) {
             Weight o1Weight = (Weight) o1Iterator.next();
             Weight o2Weight = (Weight) o2Iterator.next();
-            if (o1Weight.getId() != o2Weight.getId())
-                return (int) (o1Weight.getId() - o2Weight.getId());
-            if (o1Weight.getWeight() != o2Weight.getWeight())
-                return (int) (o1Weight.getWeight() - o2Weight.getWeight());
+            if (o1Weight.getI() != o2Weight.getI())
+                return (int) (o1Weight.getI() - o2Weight.getI());
+            if (o1Weight.getW() != o2Weight.getW())
+                return (int) (o1Weight.getW() - o2Weight.getW());
         }
         return 0;
     }

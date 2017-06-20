@@ -1,6 +1,7 @@
 package osmparser;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import osmparser.tools.Consumer;
 
 import java.io.File;
@@ -51,9 +52,9 @@ public class Osmparser {
 
     private static void dumpToJson(List<Node> nodes) throws IOException {
         Collections.sort(nodes);
-
         try (Writer writer = new FileWriter("graph.json")) {
-            new Gson().toJson(nodes, writer);
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(nodes, writer);
         }
     }
 

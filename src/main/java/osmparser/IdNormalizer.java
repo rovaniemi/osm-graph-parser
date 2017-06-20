@@ -30,7 +30,7 @@ public class IdNormalizer {
         for (Map.Entry<Long, Node> entry : oldGraph.entrySet()) {
             Node n = entry.getValue();
             long newId = newId();
-            newGraph.put(newId, new Node(newId, n.getLat(), n.getLon()));
+            newGraph.put(newId, new Node(newId, n.getLa(), n.getLo()));
             oldIdToNewId.put(entry.getKey(), newId);
         }
     }
@@ -44,10 +44,10 @@ public class IdNormalizer {
     }
 
     private void addEdges(Node oldNode, Node newNode) {
-        Set<Weight> weights = oldNode.getEdges();
+        Set<Weight> weights = oldNode.getE();
         for (Weight weight : weights) {
-            Long newTargetId = oldIdToNewId.get(weight.getId());
-            newNode.addEdgeTo(newTargetId, weight.getWeight());
+            Long newTargetId = oldIdToNewId.get(weight.getI());
+            newNode.addEdgeTo(newTargetId, weight.getW());
         }
     }
 

@@ -2,17 +2,17 @@ package osmparser;
 
 public class Weight {
 
-    private long id;
-    private long weight;
+    private long i;
+    private long w;
 
-    public Weight(long id, long weight) {
-        this.id = id;
-        this.weight = weight;
+    public Weight(long i, long w) {
+        this.i = i;// index
+        this.w = w;  // weight
     }
 
     @Override
     public int hashCode() {
-        return (int) id;
+        return (int) i;
     }
 
     @Override
@@ -21,21 +21,21 @@ public class Weight {
             return false;
         }
         Weight w = (Weight) o;
-        if (this.id != w.id) {
+        if (this.i != w.i) {
             return false;
         }
         return true;
     }
 
-    public long getId() {
-        return id;
+    public long getI() {
+        return i;
     }
 
-    public long getWeight() {
-        return weight;
+    public long getW() {
+        return w;
     }
 
     public String toString(){
-        return "" + this.getId();
+        return "" + this.getI();
     }
 }
