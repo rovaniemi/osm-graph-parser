@@ -3,9 +3,9 @@ package osmparser;
 public class Weight {
 
     private long i;
-    private long w;
+    private int w;
 
-    public Weight(long i, long w) {
+    public Weight(long i, int w) {
         this.i = i;// index
         this.w = w;  // weight
     }
@@ -31,7 +31,7 @@ public class Weight {
         return i;
     }
 
-    public long getW() {
+    public int getW() {
         return w;
     }
 

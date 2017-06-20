@@ -9,7 +9,7 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 
 group = 'com.karlin.osm-graph-parser'
-version = '0.1'
+version = '0.12'
 
 description = "Java program that parses OSM XML files into a json graph representation.Java program that parses OSM XML files into a json graph representation."
 
