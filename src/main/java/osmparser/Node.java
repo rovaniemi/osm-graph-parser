@@ -17,7 +17,7 @@ public class Node implements Comparable{
         this.e = new HashSet<>();
     }
 
-    public void addEdgeTo(long id, long distance){
+    public void addEdgeTo(long id, int distance){
         this.e.add(new Weight(id, distance));
     }
 
