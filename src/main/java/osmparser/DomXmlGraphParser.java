@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class DomXmlGraphParser implements IGraphParser {
+public class DomXmlGraphParser implements GraphParser {
 
     private final XmlReader xmlReader = new XmlReader();
     private final String[] requiredWayTags;

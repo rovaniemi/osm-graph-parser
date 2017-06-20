@@ -14,15 +14,15 @@ import java.util.Map;
 public class Osmparser {
     public static void main(String[] args) throws IOException {
         File[] mapFiles = MapFileDiscoverer.discover("map/", "map-");
-        IGraphParser parser = new StreamingXmlGraphParser("highway");
+        GraphParser parser = new StreamingXmlGraphParser("highway");
         convert(mapFiles, parser);
     }
 
-    public static void convert(File[] files, IGraphParser parser) throws IOException {
+    public static void convert(File[] files, GraphParser parser) throws IOException {
         convert(files, parser, null);
     }
 
-    public static List<Node> convert(File[] files, IGraphParser parser, Consumer<String> statusCallback) throws IOException {
+    public static List<Node> convert(File[] files, GraphParser parser, Consumer<String> statusCallback) throws IOException {
         safeAccept(statusCallback, "At convert");
         Graph parsedGraph = parseAll(files, parser);
 
@@ -40,7 +40,7 @@ public class Osmparser {
         return normalizedGraph;
     }
 
-    private static Graph parseAll(File[] xmlFiles, IGraphParser parser) throws IOException {
+    private static Graph parseAll(File[] xmlFiles, GraphParser parser) throws IOException {
         Graph graph = new Graph();
         for (File file : xmlFiles) {
             parser.parseXml(file, graph);

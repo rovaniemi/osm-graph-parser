@@ -1,7 +1,7 @@
 package osmparser.tools;
 
 import osmparser.DomXmlGraphParser;
-import osmparser.IGraphParser;
+import osmparser.GraphParser;
 import osmparser.MapFileDiscoverer;
 import osmparser.Node;
 import osmparser.NormalizedGraphDeepComparator;
@@ -34,14 +34,14 @@ public class GraphParserBenchmark {
         Runtime.getRuntime().gc();
 
         startBenchmark("Benchmarking StreamingXmlGraphParser");
-        IGraphParser streamingParser = new StreamingXmlGraphParser("highway");
+        GraphParser streamingParser = new StreamingXmlGraphParser("highway");
         List<Node> a = Osmparser.convert(mapFiles, streamingParser, progressCallback);
         finishBenchmark();
 
         Runtime.getRuntime().gc();
 
         startBenchmark("Benchmarking DomXmlGraphParser");
-        IGraphParser domParser = new DomXmlGraphParser("highway");
+        GraphParser domParser = new DomXmlGraphParser("highway");
         List<Node> b = Osmparser.convert(mapFiles, domParser, progressCallback);
         finishBenchmark();
 

@@ -57,43 +57,6 @@ public class GraphTest {
 
     @Test
     public void firstSetIsEmpty(){
-        assertEquals(true, new Graph().getGraph().isEmpty());
-    }
-
-    @Test
-    public void distanceIsZeroIfPointsIsSame(){
-        Graph g = new Graph();
-        for (int i = 0; i < 10000; i++) {
-            Assert.assertEquals(0, g.distance(this.points.get(i)[0],this.points.get(i)[1],this.points.get(i)[0],this.points.get(i)[1]));
-        }
-    }
-
-    @Test
-    public void distanceIsRight(){
-        Graph g = new Graph();
-        Assert.assertEquals(190003, g.distance(60.246496,24.943493,60.242496, 24.91002));
-        Assert.assertEquals(242148, g.distance(50.246496,24.943493,50.242496, 24.91002));
-    }
-
-    @Test
-    public void rightAmountOfNodes(){
-        Assert.assertEquals(5, this.graph.getGraph().size());
-        this.graph.addEdge(5, 1);
-        Assert.assertEquals(6, this.graph.getGraph().size());
-    }
-
-    @Test
-    public void correctGraph(){
-        Map<Long, Node> g = this.graph.getGraph();
-        Assert.assertEquals(2, g.get(0l).getEdges().size());
-        Assert.assertEquals(3, g.get(2l).getEdges().size());
-        Assert.assertEquals(false, g.containsKey(5l));
-    }
-
-    @Test
-    public void notAddNewEdgeIfBothNodesIsNotInGraph(){
-        int size = this.graph.getGraph().get(1l).getEdges().size();
-        this.graph.addEdge(1,12);
-        assertEquals(size, this.graph.getGraph().get(1l).getEdges().size());
+        assertEquals(true, new Graph().getNodesWithEdges().isEmpty());
     }
 }

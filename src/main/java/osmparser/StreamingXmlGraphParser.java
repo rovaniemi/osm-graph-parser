@@ -7,7 +7,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class StreamingXmlGraphParser implements IGraphParser {
+public class StreamingXmlGraphParser implements GraphParser {
 
     private final XMLInputFactory inputFactory;
     private final String[] requiredWayTags;

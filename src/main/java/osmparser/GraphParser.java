@@ -2,6 +2,6 @@ package osmparser;
 
 import java.io.File;
 
-public interface IGraphParser {
+public interface GraphParser {
     void parseXml(File file, Graph outputGraph);
 }
