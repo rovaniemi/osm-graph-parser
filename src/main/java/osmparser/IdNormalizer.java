@@ -1,10 +1,6 @@
 package osmparser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class IdNormalizer {
     private Map<Long, Long> oldIdToNewId;
@@ -13,11 +9,18 @@ public class IdNormalizer {
     private long nextId;
 
     public List<Node> normalizeIds(Map<Long, Node> graph) {
+        normalize(graph);
+        int size = newGraph.size();
+        weightDropper();
+        if(size != newGraph.size()) normalize(newGraph);
+        return new ArrayList<>(newGraph.values());
+    }
+
+    public void normalize(Map<Long, Node> graph){
         reset();
         oldGraph = graph;
         createNodesWithNewIds();
         addNewEdges();
-        return new ArrayList<>(newGraph.values());
     }
 
     private void reset() {
@@ -48,6 +51,25 @@ public class IdNormalizer {
         for (Weight weight : weights) {
             Long newTargetId = oldIdToNewId.get(weight.getI());
             newNode.addEdgeTo(newTargetId, weight.getW());
+        }
+    }
+
+    // Drop weight if the weight i is bigger than map size.
+    // Actually I don´t know is there any possible cases where this can happen.
+    private void weightDropper(){
+        Iterator i = newGraph.keySet().iterator();
+        int size = newGraph.size();
+        while(i.hasNext()){
+            long l = (long) i.next();
+            Set<Weight> weights = newGraph.get(l).getE();
+            Iterator j = weights.iterator();
+            while(j.hasNext()){
+                Weight e = (Weight) j.next();
+                if(e.getI() > size){
+                    j.remove();
+                }
+            }
+            if (weights.isEmpty()) i.remove();
         }
     }
 
