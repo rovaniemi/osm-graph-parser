@@ -12,31 +12,42 @@ import java.util.List;
 import java.util.Map;
 
 public class Osmparser {
-    public static void main(String[] args) throws IOException {
-        File[] mapFiles = MapFileDiscoverer.discover("map/", "map-");
-        GraphParser parser = new StreamingXmlGraphParser("highway");
-        convert(mapFiles, parser);
+
+    private final String[] mapFiles;
+    private final String outFile;
+    private final GraphParser parser;
+
+    public Osmparser(String[] mapFiles, String outFile) {
+        this(mapFiles, outFile, new StreamingXmlGraphParser("highway"));
     }
 
-    public static void convert(File[] files, GraphParser parser) throws IOException {
-        Graph parsedGraph = parseAll(files, parser);
+    public Osmparser(String[] mapFiles, String outFile, GraphParser graphParser) {
+        this.mapFiles = mapFiles;
+        this.outFile = outFile;
+        this.parser = graphParser;
+    }
+
+    public void start() throws IOException {
+        Graph parsedGraph = parseAll();
         Map<Long, Node> nonIsolatedNodes = parsedGraph.getNodesWithEdges();
         List<Node> normalizedGraph = new IdNormalizer().normalizeIds(nonIsolatedNodes);
         dumpToJson(normalizedGraph);
     }
 
-    private static Graph parseAll(File[] xmlFiles, GraphParser parser) throws IOException {
+    private Graph parseAll() throws IOException {
         Graph graph = new Graph();
-        for (File file : xmlFiles) {
+
+        for (String fileName : mapFiles) {
+            File file = new File(fileName);
             parser.parseXml(file, graph);
         }
 
         return graph;
     }
 
-    private static void dumpToJson(List<Node> nodes) throws IOException {
+    private void dumpToJson(List<Node> nodes) throws IOException {
         Collections.sort(nodes);
-        try (Writer writer = new FileWriter("graph.json")) {
+        try (Writer writer = new FileWriter(outFile)) {
             Gson gson = new GsonBuilder().create();
             gson.toJson(nodes, writer);
         }
