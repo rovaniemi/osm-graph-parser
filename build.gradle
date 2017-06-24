@@ -25,7 +25,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes  'Implementation-Title': 'osm-graph-parser',
                     'Implementation-Version': '0.1',
-                    'Main-Class': 'osmparser.Osmparser'
+                    'Main-Class': 'osmparser.Main'
     }
     baseName = 'osmparser'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
@@ -38,7 +38,8 @@ dependencies { testCompile 'org.mockito:mockito-core:2.8.9' }
 dependencies {
     compile (
             'com.google.code.gson:gson:2.8.0',
-            'com.fasterxml:aalto-xml:1.0.0'
+            'com.fasterxml:aalto-xml:1.0.0',
+            'commons-cli:commons-cli:1.4'
     )
     testCompile group: 'junit', name: 'junit', version:'4.12'
 }
