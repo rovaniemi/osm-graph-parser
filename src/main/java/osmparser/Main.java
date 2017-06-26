@@ -4,9 +4,6 @@ import org.apache.commons.cli.*;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Properties;
-import java.util.regex.Pattern;
 
 public class Main {
     private static String PROGRAM_NAME = "osmparser";
@@ -17,6 +14,7 @@ public class Main {
         Options options = createOptions();
 
         CommandLine cmd = null;
+
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException ex) {
@@ -43,8 +41,14 @@ public class Main {
             info("Excluded tags: " + Arrays.asList(excludedTags));
         }
 
+        String[] output = cmd.getOptionValues("output");
+
+        if(notQuiet && output[0] != null) {
+            info("Output file name: " + output[0]);
+        }
+
         try {
-            createOsmparser(files, includedTags, excludedTags).start();
+            createOsmparser(files, output, includedTags, excludedTags).start();
         } catch (RuntimeException ex) {
             if (!(ex.getCause() instanceof IOException)) {
                 throw ex;
@@ -71,9 +75,10 @@ public class Main {
         return tags;
     }
 
-    private static Osmparser createOsmparser(String[] files, WayTag[] includeWays, WayTag[] excludeWays) {
+    private static Osmparser createOsmparser(String[] files, String[] output, WayTag[] includeWays, WayTag[] excludeWays) {
         StreamingXmlGraphParser graphParser = new StreamingXmlGraphParser(includeWays, excludeWays);
-        return new Osmparser(files, "graph.json", graphParser);
+        if(output[0] == null) return new Osmparser(files, "graph.json", graphParser);
+        return new Osmparser(files, output[0], graphParser);
     }
 
     private static Options createOptions() {
@@ -81,7 +86,7 @@ public class Main {
 
         Option files = Option.builder("f")
             .longOpt("files")
-            .desc("the XML map files to be parsed")
+            .desc("the osm (xml) map files to be parsed")
             .hasArgs()
             .required()
             .build();
@@ -107,6 +112,12 @@ public class Main {
             .build();
         options.addOption(excludeWays);
 
+        Option output = Option.builder("o")
+            .longOpt("output")
+            .desc("output file name")
+            .hasArgs()
+            .build();
+        options.addOption(output);
         return options;
     }
 

@@ -7,7 +7,7 @@ Java program that parses OSM XML files into a json graph representation.
 
 ## Example
 
-In output file you will have nodes and edges (highways in real world) with weight (unit: `centimetres`).
+In output file you will have nodes and edges with weight (unit: `centimetres`).
 ```json
 [
   {
@@ -53,21 +53,32 @@ In output file you will have nodes and edges (highways in real world) with weigh
  i = main array index, if the i is 0 it refers to the first element in the array
  w = weight
  ```
+
+ ### Command-line flags
+
+```
+-f, --files           osm files to be parsed
+-i, --includeWays     way tags to include
+-e, --excludeWays     way tags to exclude (overrides includeWay)
+-o, --output          output file name
+-q, --quiet           suppress console output
+```
+
 ## Getting Started
 
 1. [Download](https://github.com/rovaniemi/osm-graph-parser/releases) latest version under the releases tab.
 2. [Download](https://www.openstreetmap.org/) openstreetmap data. (click export, select area, and then export)
-3. Make directory called `map` in the directory where you have downloaded .jar file.
-4. Name osm file to map-01.osm, if you have multiple osm files name them like `map-01.map`, `map-02.map` etc. and put them in map directory.
-5. Now your tree should look like this. ![img](http://imgur.com/ntvFUQN.png)
-6. Run the jar file. (terminal `java -jar <jar-file-name>.jar`)
-7. Now you have `graph.json` in the same directory where the .jar file is.
+3. Use -f flag to select osm files.
+4. Use -i flag to select ways. You can view osm map features [here.](http://wiki.openstreetmap.org/wiki/Map_Features)
+5. Use -o flag to defining output file name.
+6. Run the jar file. (terminal `java -jar <jar-file-name>.jar -f files -i selected ways -o output file name`)
+7. Now you have `json` in the same directory where the .jar file is.
 8. If you use this data in your own service read [openstreetmap licence.](https://opendatacommons.org/licenses/odbl/1.0/)
 
 ### Possible errors
 
 1. Parsing take much time or program crash.
-    - You need more memory for the program. Change java run command to `java -jar -Xmx4096m <jar-file-name>.jar`. That will increase java heap max size to 4gb. You will need 4gb ram for that. If you parse huge map you will need bigger heap size.
+    - The program does not have enought memory. Use `-Xmx` flag with java. Example run command `java -jar -Xmx4096m <jar-file-name>.jar`. That will increase java heap max size to 4gb. You will need 4gb ram for that. 
 
 ### Prerequisites
 

@@ -19,6 +19,7 @@ public class Osmparser {
 
     public Osmparser(String[] mapFiles, String outFile, GraphParser graphParser) {
         this.mapFiles = mapFiles;
+        if(!outFile.endsWith(".json")) outFile += ".json";
         this.outFile = outFile;
         this.parser = graphParser;
     }
