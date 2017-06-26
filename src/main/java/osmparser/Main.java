@@ -41,10 +41,12 @@ public class Main {
             info("Excluded tags: " + Arrays.asList(excludedTags));
         }
 
-        String[] output = cmd.getOptionValues("output");
+        String output = cmd.getOptionValue("output");
 
-        if(notQuiet && output[0] != null) {
-            info("Output file name: " + output[0]);
+        if(notQuiet && output != null) {
+            info("Output file name: " + output);
+        } else if(notQuiet){
+            info("Output file name: graph.json");
         }
 
         try {
@@ -75,10 +77,10 @@ public class Main {
         return tags;
     }
 
-    private static Osmparser createOsmparser(String[] files, String[] output, WayTag[] includeWays, WayTag[] excludeWays) {
+    private static Osmparser createOsmparser(String[] files, String output, WayTag[] includeWays, WayTag[] excludeWays) {
         StreamingXmlGraphParser graphParser = new StreamingXmlGraphParser(includeWays, excludeWays);
-        if(output[0] == null) return new Osmparser(files, "graph.json", graphParser);
-        return new Osmparser(files, output[0], graphParser);
+        if(output == null) return new Osmparser(files, "graph.json", graphParser);
+        return new Osmparser(files, output, graphParser);
     }
 
     private static Options createOptions() {
@@ -116,7 +118,7 @@ public class Main {
         Option output = Option.builder("o")
             .longOpt("output")
             .desc("output file name")
-            .hasArgs()
+            .hasArg()
             .build();
         options.addOption(output);
 
