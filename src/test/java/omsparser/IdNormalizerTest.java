@@ -43,7 +43,6 @@ public class IdNormalizerTest {
             oldMap.get(l).addEdgeTo(2,(int) (2 * l));
         }
         List<Node> newMap = idNormalizer.normalizeIds(oldMap);
-        Collections.sort(newMap);
         for (int i = 0; i < newMap.size(); i++) {
             assertEquals(newMap.get(i).getId(), i);
             assertEquals(newMap.get(i).getE().size(), 1);

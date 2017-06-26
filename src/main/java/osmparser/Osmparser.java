@@ -43,7 +43,7 @@ public class Osmparser {
     }
 
     private void dumpToJson(List<Node> nodes) throws IOException {
-        Collections.sort(nodes);
+
         try (Writer writer = new FileWriter(outFile)) {
             Gson gson = new GsonBuilder().create();
             gson.toJson(nodes, writer);

@@ -6,7 +6,7 @@ public class Weight {
     private int w;
 
     public Weight(long i, int w) {
-        this.i = i;// index
+        this.i = i;  // index
         this.w = w;  // weight
     }
 

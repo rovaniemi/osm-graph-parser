@@ -10,7 +10,9 @@ public class IdNormalizer {
 
     public List<Node> normalizeIds(Map<Long, Node> graph) {
         normalize(graph);
-        return new ArrayList<>(newGraph.values());
+        List<Node> normalizedList = new ArrayList<>(newGraph.values());
+        Collections.sort(normalizedList);
+        return normalizedList;
     }
 
     private void normalize(Map<Long, Node> graph){
