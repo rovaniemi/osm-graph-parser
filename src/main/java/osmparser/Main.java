@@ -102,6 +102,7 @@ public class Main {
             .longOpt("includeWays")
             .desc("way tags to include")
             .hasArgs()
+            .required()
             .build();
         options.addOption(includeWays);
 
@@ -118,6 +119,7 @@ public class Main {
             .hasArgs()
             .build();
         options.addOption(output);
+
         return options;
     }
 
