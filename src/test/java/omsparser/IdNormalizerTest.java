@@ -46,8 +46,8 @@ public class IdNormalizerTest {
         }
         List<Node> newMap = idNormalizer.normalizeIds(oldMap);
         for (int i = 0; i < newMap.size(); i++) {
-            assertTrue(newMap.get(i).getId() == i);
-            assertTrue(newMap.get(i).getE().size() == 1);
+            assertEquals(newMap.get(i).getId(), i);
+            assertEquals(newMap.get(i).getE().size(), 1);
         }
 
     }

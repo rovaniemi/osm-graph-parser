@@ -22,6 +22,12 @@ repositories {
     }
 }
 
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
 task fatJar(type: Jar) {
     manifest {
         attributes  'Implementation-Title': 'osm-graph-parser',
