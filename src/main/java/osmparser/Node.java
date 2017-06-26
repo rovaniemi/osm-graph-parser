@@ -68,4 +68,8 @@ public class Node implements Comparable{
         return (int)(this.getId() - n.getId());
     }
 
+    @Override
+    public String toString() {
+        return "id: " + id;
+    }
 }

@@ -4,9 +4,7 @@ import org.junit.*;
 import osmparser.IdNormalizer;
 import osmparser.Node;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -39,12 +37,13 @@ public class IdNormalizerTest {
         Map<Long, Node> oldMap = new HashMap<Long, Node>();
         IdNormalizer idNormalizer = new IdNormalizer();
         for (int i = 0; i < 10000; i++) {
-            oldMap.put(i * 2l, new Node(i * 2, 16.22, 12.60));
+            oldMap.put((long)(i * 2), new Node(i * 2, 16.22, 12.60));
         }
         for (Long l:oldMap.keySet()) {
             oldMap.get(l).addEdgeTo(2,(int) (2 * l));
         }
         List<Node> newMap = idNormalizer.normalizeIds(oldMap);
+        Collections.sort(newMap);
         for (int i = 0; i < newMap.size(); i++) {
             assertEquals(newMap.get(i).getId(), i);
             assertEquals(newMap.get(i).getE().size(), 1);
