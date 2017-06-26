@@ -17,10 +17,6 @@ public class Osmparser {
     private final String outFile;
     private final GraphParser parser;
 
-    public Osmparser(String[] mapFiles, String outFile) {
-        this(mapFiles, outFile, new StreamingXmlGraphParser("highway"));
-    }
-
     public Osmparser(String[] mapFiles, String outFile, GraphParser graphParser) {
         this.mapFiles = mapFiles;
         this.outFile = outFile;

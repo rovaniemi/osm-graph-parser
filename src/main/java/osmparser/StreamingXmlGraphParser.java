@@ -12,17 +12,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class StreamingXmlGraphParser implements GraphParser {
 
     private final XMLInputFactory inputFactory;
-    private final String[] requiredWayTags;
+    private final WayTag[] includedWayTags;
+    private final WayTag[] excludedWayTags;
     private Graph graph;
 
-    public StreamingXmlGraphParser(String... requiredWayTags) {
+    public StreamingXmlGraphParser(WayTag[] includedWayTags, WayTag[] excludedWayTags) {
         this.inputFactory = InputFactoryImpl.newFactory();
-        this.requiredWayTags = requiredWayTags;
+        this.includedWayTags = includedWayTags;
+        this.excludedWayTags = excludedWayTags;
     }
 
     @Override
@@ -66,17 +69,19 @@ public class StreamingXmlGraphParser implements GraphParser {
 
     private void readWayElement(XMLStreamReader reader) throws XMLStreamException {
         ArrayList<Long> wayNodesIds = new ArrayList<>(1024);
-        HashSet<String> wayTags = new HashSet<>(64);
+        HashMap<String, String> wayTags = new HashMap<>(64);
         readIdsAndTags(reader, wayNodesIds, wayTags);
 
-        if (containsAllRequiredTags(wayTags)) {
+        if (!containsAnyTargetTags(wayTags, excludedWayTags)
+            && containsAnyTargetTags(wayTags, includedWayTags)
+        ) {
             addEdgesToGraph(wayNodesIds);
         }
     }
 
     private static void readIdsAndTags(XMLStreamReader reader,
                                        ArrayList<Long> nodesOut,
-                                       HashSet<String> tagsOut) throws XMLStreamException {
+                                       HashMap<String, String> tagsOut) throws XMLStreamException {
         // when we're here, reader cursor is currently at START_ELEMENT, that is, <way>
         int nodeChildDepth = 1;
 
@@ -92,8 +97,10 @@ public class StreamingXmlGraphParser implements GraphParser {
                     Long id = Long.parseLong(ndRefAttribute);
                     nodesOut.add(id);
                 } else if (elementName.equals("tag")) {
+                    // according to the schema, "k" and "v" are required
                     String tagKeyAttribute = reader.getAttributeValue(null, "k");
-                    tagsOut.add(tagKeyAttribute);
+                    String tagKeyValue = reader.getAttributeValue(null, "v");
+                    tagsOut.put(tagKeyAttribute, tagKeyValue);
                 }
             } else if (eventType == XMLEvent.END_ELEMENT) {
                 nodeChildDepth--;
@@ -121,13 +128,27 @@ public class StreamingXmlGraphParser implements GraphParser {
         throw new RuntimeException("Reached end of XMLStream inside readIdsAndTags! Expected </way>!");
     }
 
-    private boolean containsAllRequiredTags(HashSet<String> foundTags) {
-        for (int i = 0; i < requiredWayTags.length; i++) {
-            if (!foundTags.contains(requiredWayTags[i])) {
-                return false;
+    private static boolean containsAnyTargetTags(HashMap<String, String> foundTags, WayTag[] targetTags) {
+        for (WayTag tag : targetTags) {
+            String targetKey = tag.getTagKey();
+            String targetValue = tag.getTagValue(); // may be null
+
+            // foundValue is guaranteed to be non-null if the key was found
+            String foundValue = foundTags.get(targetKey);
+            if (foundValue != null && (targetMatchesAnyValue(targetValue) || targetMatchesValue(targetValue, foundValue))) {
+                return true;
             }
         }
-        return true;
+
+        return false;
+    }
+
+    private static boolean targetMatchesValue(String targetValue, String foundValue) {
+        return Objects.equals(targetValue, foundValue);
+    }
+
+    private static boolean targetMatchesAnyValue(String targetValue) {
+        return targetValue == null;
     }
 
     private void addEdgesToGraph(ArrayList<Long> edges){
