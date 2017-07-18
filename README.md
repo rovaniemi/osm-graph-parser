@@ -1,7 +1,7 @@
 # osm-graph-parser
 ![travis](https://travis-ci.org/rovaniemi/osm-graph-parser.svg?branch=master)
 [![Code Coverage](https://img.shields.io/codecov/c/github/rovaniemi/osm-graph-parser/master.svg)](https://codecov.io/github/rovaniemi/osm-graph-parser)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/rovaniemi/osm-graph-parser/blob/master/LICENSE)
+[![License: GPL v3](https://img.shields.io/aur/license/yaourt.svg)](https://github.com/rovaniemi/osm-graph-parser/blob/master/LICENSE)
 
 Java program that parses OSM XML files into a json graph representation. 
 
