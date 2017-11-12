@@ -92,11 +92,11 @@ public class StreamingXmlGraphParser implements GraphParser {
                 nodeChildDepth++;
 
                 String elementName = reader.getLocalName();
-                if (elementName.equals("nd")) {
+                if ("nd".equals(elementName)) {
                     String ndRefAttribute = reader.getAttributeValue(null, "ref");
                     Long id = Long.parseLong(ndRefAttribute);
                     nodesOut.add(id);
-                } else if (elementName.equals("tag")) {
+                } else if ("tag".equals(elementName)) {
                     // according to the schema, "k" and "v" are required
                     String tagKeyAttribute = reader.getAttributeValue(null, "k");
                     String tagKeyValue = reader.getAttributeValue(null, "v");
@@ -106,7 +106,7 @@ public class StreamingXmlGraphParser implements GraphParser {
                 nodeChildDepth--;
 
                 String elementName = reader.getLocalName();
-                if (nodeChildDepth == 0 && elementName.equals("way")) {
+                if (nodeChildDepth == 0 && "way".equals(elementName)) {
                     return;
                 }
                 if (nodeChildDepth <= 0) {
